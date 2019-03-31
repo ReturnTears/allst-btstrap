@@ -45,7 +45,7 @@ public class DruidConfig {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
         Map<String, String> initParams = new HashMap<>();
-        initParams.put("exclusions", "*.js,*.css,/druid/*");
+        initParams.put("exclusions", "*.js,*.css,/druid/*,http://localhost:8081/");
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));
         return bean;

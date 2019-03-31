@@ -1,11 +1,12 @@
 package allst.boot.strap.controller.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import allst.boot.strap.bean.Brand;
+import allst.boot.strap.mapper.BrandMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Vue调用后台数据的API Controller
@@ -16,11 +17,26 @@ import java.util.Map;
 @RequestMapping("/vueApi")
 public class AllstVueApiController {
 
+    @Autowired
+    private BrandMapper brandMapper;
 
+    /**
+     * 根据id获取brand信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/brand/{id}")
+    public Brand getBrandLists(@PathVariable("id") Integer id) {
+        return brandMapper.getBrandById(id);
+    }
 
-    @GetMapping("/brand/lists")
-    public List<Map<String, Object>> getBrandLists() {
-        List<Map<String, Object>> list = null;
-        return list;
+    @GetMapping("/brand")
+    public List<Brand> getBrands() {
+        return brandMapper.getBrands();
+    }
+
+    @PostMapping("/brand")
+    public Integer insertBrand(Integer brandId, String brandName) {
+        return brandMapper.insertBrand(brandId, brandName);
     }
 }

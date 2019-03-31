@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Vue修改品牌列表</title>
     <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!-- vue-resource : 访问远端数据库-->
+    <script th:src="@{/webjars/vue-resource/1.3.4/dist/vue-resource.js}"></script>
+    <!-- 必须添加rel="stylesheet",否则添加页面样式不会显示的 -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
 </head>
 <body>
@@ -13,8 +16,9 @@
         <div class="panel-heading">
             <h3 class="panel-title">添加品牌</h3>
         </div>
+        <!-- form-inline:一行显示 -->
         <div class="panel-body form-inline">
-            <label>ID:
+            <label>BrandId:
                 <input type="text" v-model="id"/>
             </label>
             <label>Name:
@@ -29,17 +33,18 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>CTime</th>
+            <th>brandId</th>
+            <th>brandName</th>
+            <th>brandCTime</th>
             <th>Operation</th>
         </tr>
         </thead>
         <tbody>
-            <tr v-for="item in list" :key="item.id">
-                <td>{{item.id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.ctime}}</td>
+            <!-- key只接受字符串或number -->
+            <tr v-for="item in list" :key="item.brandID">
+                <td>{{item.brandID}}</td>
+                <td>{{item.brandName}}</td>
+                <td>{{item.brandCTime}}</td>
                 <td>
                     <a href="javascript:;">删除</a>
                 </td>
@@ -56,15 +61,42 @@
             id: "",
             name: "",
             list: [
-                {id: 1, name: "阿尔法·罗密欧", ctime: new Date()},
-                {id: 2, name: "阿斯顿马丁", ctime: new Date()},
-                {id: 3, name: "保时捷·帕拉梅拉", ctime: new Date()}
+                {brandID: 1, brandName: "阿尔法·罗密欧", brandCTime: new Date()},
+                {brandID: 2, brandName: "阿斯顿马丁", brandCTime: new Date()},
+                {brandID: 3, brandName: "保时捷·帕拉梅拉", brandCTime: new Date()}
             ]
         },
         methods: {
+            // 添加品牌数据
+            // 1、this.$http.post()中接收三个参数
+            //      第一个参数:要请求的url地址
+            //      第二个参数:要提交的服务器数据，以对象形式提交给服务器
+            //      第三个参数:是一个配置对象，要以那种表单数据类型提交过去
             add() {
-
+                this.$http.post('',{brandID: this.id, brandName: this.name},{emulateJSON: true})
+                    .then(result => {
+                        if (result.body.status === 0) {
+                            this.getAllList()
+                        } else {
+                            alert('添加失败.')
+                        }
+                    });
+            },
+            // 获取所有的品牌列表：
+            // 1、由于已经导入了vue-resource包,所以可以直接通过this.$http来发起数据请求
+            // 2、根据API获取列表的时候发起get请求
+            // 3、this.$http.get('url').then(function(result){})
+            // 4、先判断result.status = 0 ？成功 ： 失败，
+            getAllList() {
+                this.$http.get('http://localhost:8081/vueApi/brand').then(result => {
+                    console.log(result.body);
+                    this.list = result.body;
+                });
             }
+        },
+        // 申明钩子函数
+        created() {
+            this.getAllList();
         }
     });
 </script>

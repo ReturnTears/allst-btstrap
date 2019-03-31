@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="allst.boot.strap.dao.impl.BrandListsDaoImpl" xmlns="http://mybatis.org/schema/mybatis-mapper">
+<mapper namespace="allst.boot.strap.dao.impl.BrandListsDaoImpl" >
     <resultMap id="brandListMap" type="java.util.HashMap">
         <id column="id" property="id"/>
         <result column="brandID" property="brandID"/>

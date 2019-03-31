@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?autoReconnect=true
+    url: jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=true
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
@@ -24,3 +24,4 @@ spring:
     filters: stat,wall,log4j
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    
