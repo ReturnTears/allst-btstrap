@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <script src="asserts/js/jquery-3.2.1.js" th:src="@{/webjars/jquery/3.1.1/jquery.js}"></script>
+</head>
+<body>
+<!-- http://t.weather.sojson.com/api/weather/city/101270101 -->
+<div id="wea1" class="wea1"></div>
+<script type="text/javascript">
+
+    $(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'https://www.tianqiapi.com/api/',
+            data: 'version=v1&style=1001&city=成都',
+            dataType: 'JSON',
+            error: function () {
+                alert('网络错误');
+            },
+            success: function (res) {
+                uptime = res.update_time.substring(11);
+                uptime = uptime.substring(0,uptime.length-3);
+                $('body').append('【' + res.city + '】' + res.data[0].wea + ' ' + res.data[0].tem1 + '/' + res.data[0].tem2 + ',' + uptime + '更新~');
+            }
+        });
+    });
+</script>
+</body>
+</html>

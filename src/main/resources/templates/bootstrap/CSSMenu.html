@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="dropdown pull-right">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                下拉菜单
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                <!--<li role="presentation" class="dropdown-header">大写一到四</li>-->
+                <li><a href="#" role="menuitem">一</a></li>
+                <li><a href="#" role="menuitem">二</a></li>
+                <li><a href="#" role="menuitem">三</a></li>
+                <li><a href="#" role="menuitem">四</a></li>
+                <!--<li role="presentation" class="dropdown-header">小写1到4</li>-->
+                <li role="presentation" class="divider"></li>
+                <li><a href="#" role="menuitem">1</a></li>
+                <li><a href="#" role="menuitem">2</a></li>
+                <li class="disabled"><a href="#" role="menuitem">3</a></li>
+                <li><a href="#" role="menuitem">4</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- bootstrap的js是依赖于jQuery的 -->
+    <script type="text/javascript" src="" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Allst-Vue-Pm</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+    <!-- new的Vue实例，会控制这个元素的所有内容 -->
+    <div id="app">
+        <input th:type="button" th:value="Move" @click="move"/>
+        <input th:type="button" th:value="Stop" @click="stop"/>
+        <h3>{{msg}}</h3>
+    </div>
+
+    <script>
+        // 创建Vue对象
+        var  vm = new Vue({
+            el: '#app', // 表示当前我们new的这个Vue实例，要控制页面上的那个区域
+            data: {
+                msg: 'Allst Vue Study Demo Project Pm ',
+                intervalId: null
+            },
+            //methods属性中定义了当前Vue实例的所有可用方法
+            methods: {
+                move: function() {
+                    if (this.intervalId) return;
+                    this.intervalId = setInterval(() => {
+                        var start = this.msg.substring(0, 1);
+                        var end = this.msg.substring(1);
+                        this.msg = end + start;
+                    }, 200)
+                },
+                stop: function() {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
+            },
+        })
+    </script>
+</body>
+</html>

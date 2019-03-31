@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 事件修饰符</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+        .inner {
+            height: 150px;
+            background-color: hotpink;
+        }
+        .outer {
+            margin: auto;
+            background-color: #1b6d85;
+        }
+    </style>
+</head>
+<body>
+<!--
+    事件修饰符:
+        .stop:阻止冒泡事件
+        .prevent:阻止默认行为
+        .capture:捕获机制,放在最外层的事件上
+        .self:只有点击当前元素时才触发当前事件,其子元素不会触发
+        .once:只触发一次事件
+ -->
+<!-- 默认冒泡机制:点击按钮先触发btn在div, -->
+<div id="app">
+    <div class="inner" @click="divClick">
+        <input type="button" value="戳他" @click.stop="btnClick"/>
+    </div>
+    <a href="https://www.baidu.com/" @click.prevent="linkClick">去百度</a><span>(a标签的默认事件被阻止)</span>
+    <div class="inner" @click.capture="divClick">
+        <input type="button" value="戳他" @click="btnClick"/>
+    </div>
+    <hr/>
+    <div class="outer" @click="outClick">
+        <div class="inner" @click.self="divClick">
+            <input type="button" value="戳他" @click="btnClick"/>
+        </div>
+    </div>
+    <a href="https://www.baidu.com/" @click.prevent.once="linkClick">去百度</a><span>(a标签的默认事件只被阻止一次)</span>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            divClick() {
+                console.log('触发了inner div 点击事件')
+            },
+            btnClick() {
+                console.log('触发了btn 按钮 点击事件')
+            },
+            linkClick() {
+                console.log('触发了link 链接点击事件')
+            },
+            outClick() {
+                console.log('触发了out 链接点击事件')
+            }
+        }
+    })
+</script>
+</body>
+</html>

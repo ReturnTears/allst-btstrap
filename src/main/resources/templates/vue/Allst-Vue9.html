@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <title>Prop-Validation</title>
+    <style>
+        #app {
+            margin: 1em;
+            font-size: 1.2em;
+        }
+
+        .component div {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <my-component :prop-a="msg"></my-component>
+</div>
+<script type="text/x-template" id="my-component">
+    <div class="component">
+        {{propD}}
+    </div>
+</script>
+
+<script>
+    // register
+    Vue.component('my-component',{
+        props: {
+            parentMsg: null,//null 代表不检查性别
+            propA: Number,//限定数字
+            propB: [String,Number],//多重条件可用[] 隔开
+            propC: {
+                //必要，且限定字符串类型
+                type: String,
+                //相当于表单中的
+                // required:ture
+            },
+            propD: {
+                //数字类型 而且有预设值
+                type: Number,
+                default: 100
+            },
+            propE: {
+                //Object类型 代表可接受的是个对象或者数组
+                type: Object,
+                default: function () {
+                    return {
+                        message:'hello'
+                    }
+                }
+            },
+            propF: {
+                //自定条件检验
+                validator: function (value) {
+                    return value > 110
+                }
+            }
+        },
+        template: '#my-component',
+        data: function () {
+            return {
+                msg:"Msg of Child"
+            }
+        }
+    });
+    //create a root instance
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 123
+        }
+    });
+</script>
+</body>
+</html>

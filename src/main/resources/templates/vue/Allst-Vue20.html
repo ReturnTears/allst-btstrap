@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue过滤器</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!-- 可以定义多个过滤器，依次执行过滤器后将结果返回 -->
+    <p>{{msg | msgFormat('Wao') | test}}</p>
+</div>
+
+<script type="text/javascript">
+    // 注意：定义全局的变量/对象都要放在Vue对象的上面，执行是顺序加载的，放到其他位置可能加载不了
+    // 定义全局过滤器(过滤器中的function第一个参数已经被规定作为过滤器管道符前面传递的数据)
+    // 过滤器只是作为原字符的中间处理，没有修改原字符串
+    Vue.filter('msgFormat', function (msg, arg) {
+        // replace方法只能替换一个位置
+        // return msg.replace('Hello', 'Hi')
+        // replace方法第一个参数可以使用正则
+        // return msg.replace(/Hello/g, 'Hi')
+        // 通用模式,在处理方法中定义一个参数，多个参数可以用逗号分开
+        return msg.replace(/Hello/g, arg)
+    });
+    // 再定义一个过滤器
+    Vue.filter('test', function (msg) {
+        return msg.replace('JavaScript','JS')
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg:'Hello World, Hello JavaScript, Hello Vue'
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>

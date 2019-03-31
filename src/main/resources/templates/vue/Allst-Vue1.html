@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Allst-Vue1</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+    <!-- new的Vue实例，会控制这个元素的所有内容 -->
+    <div id="app">
+        <!-- 使用v-clock可以解决插值表达式闪烁的问题 -->
+        <h2 th:v-cloak>{{msg}}</h2>
+        <!-- v-text没有闪烁的问题,会覆盖标签中原本的内容 -->
+        <h3 th:v-text="msg">被替换</h3>
+
+        <h4>{{msg2}}</h4>
+        <h4 th:v-text="msg2"></h4>
+        <h4 th:v-html="msg2"></h4>
+
+        <!-- v-bind是Vue中用于提供绑定属性的指令,可以缩写为: , v-bind可以写合法的js表达式 -->
+        <input type="button" value="按钮1" v-bind:title="mytitle + '名称'">
+        <input type="button" value="按钮2" :title="mytitle + '11'">
+        <!-- v-on绑定事件的指令 -->
+        <input type="button" value="按钮3" v-on:click="show">
+        <input type="button" value="按钮4" @click="show">
+    </div>
+
+    <script>
+        // 创建Vue对象
+        var  vm = new Vue({
+            el: '#app', // 表示当前我们new的这个Vue实例，要控制页面上的那个区域
+            data: { // data属性中，存放的是el中要用到的数据
+                msg: '开启Vue学习之旅',
+                msg2: '<h1>msg2内容</h1>',
+                mytitle: '自定义title'
+            },
+            methods: { //methods属性中定义了当前Vue实例的所有可用方法
+                show: function () {
+                    alert('hi');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

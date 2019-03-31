@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue实例的生命周期</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+
+<div id="app">
+    <h3>{{ msg }}</h3>
+</div>
+
+<script type="text/javascript">
+    // ViewModel,创建实例
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg:'Vue实例的生命周期'
+        },
+        methods: {
+            show() {
+                console.log('执行show方法')
+            }
+        },
+        // 这是我们遇到的第一个生命周期函数，表示实例完全被创建出来之前，会执行它
+        beforeCreate() {
+            console.log(this.msg);
+            // 执行下面这一行的时候，data、methods还没有被初始化完成
+            // 表示在beforeCreate生命周期函数执行的时候、data和methods都还没有被初始化
+            // this.show()
+        },
+        // 这是遇到第二个生命周期函数,在created中，data和methods都已经被初始化好了
+        // 如歌要调用data中的数据和method中的方法最早只能在created中操作
+        created() {
+            console.log(this.msg);
+            this.show()
+        },
+        // 这是遇到的第三个周期函数
+        //此函数执行的时候在内存中已经编译好了，但是还没有挂载到页面中
+        beforeMount() {
+
+        },
+        // 这是遇到第四个生命周期函数
+        // 在内存中的模板已经挂载到了页面，用户可以看到已经渲染好了的页面
+        // 如果要通过某些插件操作页面上的DOM节点，最早要在mounted中进行
+        // 只要执行完了mounted就表示整个Vue实例已经初始化完成了，此时，组件已经脱离了创建阶段，进入了运行阶段
+        mounted() {
+
+        },
+        // 当data上的数据改变的时候就会触发beforeUpdate
+        // 下面的两个事件会根据data数据的改变，有选择性的触发0次到多次
+        // 当执行beforeUpdate的时候，页面中的显示的数据，还是旧的，此时data数据是最新，但页面尚未和最新的数据保持同步
+        beforeUpdate() {
+
+        },
+        // 该事件执行的时候，页面和data数据已经保持同步了，都是最新的数据
+        updated() {
+
+        },
+        // 当执行beforeDestroy钩子函数的时候，Vue实例就已经从运行阶段进入到了销毁阶段
+        // 当执行beforeDestroy的时候，实例身上所有的data和所有的methods以及过滤器，指令....都处于可用状态，此时还没有真正执行销毁的过程
+        beforeDestroy() {
+
+        },
+        Destroyed() {
+
+        }
+    })
+</script>
+</body>
+</html>

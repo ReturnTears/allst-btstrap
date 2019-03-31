@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Allst-Vue3-案例</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        a {
+            color: #333000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <label>
+        <input type="checkbox" name="all" v-on:click="chooseAll" v-model="selectArr.length==goodsList.length"/>
+        <span>全选</span>
+    </label>
+    <div v-for="(index, item) in goodsList">
+        <a href="javascript:;" rel="external nofollow">
+            <input type="checkbox" :value="index" v-model="selectArr"/>
+            商品名称:<span v-html="item.name"></span>
+            价格:<span v-html="item.price"></span>
+        </a>
+    </div>
+    <label>
+        <input type="checkbox" name="all" v-on:click="chooseAll" v-model="selectArr.length==goodsList.length" />
+        <span>全选</span>
+    </label>
+    <script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
+    <script>
+        var vue = new Vue({
+          el: 'body',
+          data: {
+              goodsList: [
+                  {
+                      name: '哇哈哈1',
+                      price: '18.81'
+                  },
+                  {
+                      name: '哇哈哈2',
+                      price: '18.82'
+                  },
+                  {
+                      name: '哇哈哈3',
+                      price: '18.83'
+                  },
+                  {
+                      name: '哇哈哈4',
+                      price: '18.84'
+                  },
+                  {
+                      name: '哇哈哈5',
+                      price: '18.85'
+                  }
+              ],
+              selectArr: []
+          },
+            ready: function () {
+
+            },
+            methods: {
+              chooseAll: function (event) {
+                  var oThis = this;
+                  oThis.selectArr = [];
+                  if (event.currentTarget.checked) {
+                      oThis.goodsList.forEach(function (item, index) {
+                          oThis.selectArr.push(index);
+                      });
+                  }
+                  console.log(oThis.selectArr)
+              }
+            }
+        })
+    </script>
+</body>
+</html>

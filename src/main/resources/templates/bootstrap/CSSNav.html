@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Nav</title>
+    <link rel="stylesheet" href="assert/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <!-- class属性: 导航标签式属性nav-tabs,另一种标签式nav-pills,nav-stacked垂直展示,nav-justified两端对齐、充满全屏 -->
+        <ul id="mytab" class="nav nav-pills nav-justified" role="tablist">
+            <li role="presentation" class="active"><a href="">Home</a></li>
+            <li role="presentation"><a href="">First</a></li>
+            <!-- class属性：disabled禁止点击 -->
+            <li role="presentation"><a href="">Second</a></li>
+            <!-- 带下拉框的 -->
+            <li role="presentation" class="dropdown"><a href="" class="dropdown-toggle" data-toggle="dropdown">Third
+                <span class="caret"></span>
+            </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a role="menuitem" tabindex="-1">Hello-One</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">Hello-Two</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">Hello-Thd</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">Hello-For</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 导航条:固定在顶端：navbar-fixed-top会覆盖顶端的内容,navbar-fixed-bottom -->
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">极客</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" id="mynav" >
+                    <li class="active"><a href="">Link-one</a></li>
+                    <li><a href="">Link-two</a></li>
+                    <li><a href="">Link-thd</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索内容">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="">Link-for</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">点我<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Hello-1</a></li>
+                            <li><a href="#">Hello-2</a></li>
+                            <li><a href="#">Hello-3</a></li>
+                            <li><a href="#">Hello-4</a></li>
+                            <li><a href="#">Hello-5</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 路径导航 -->
+    <nav class="navbar navbar-default" role="navigation">
+        <ol class="breadcrumb">
+            <li><a href="">Root</a></li>
+            <li><a href="">Apps</a></li>
+            <li><a href="">Java</a></li>
+        </ol>
+    </nav>
+
+    <!-- Bootstrap是依赖jQuery的 -->
+    <script type="text/javascript" src="" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <script>
+        $("#mytab a").click(function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        });
+        $("#mynav a").click(function (e) {
+            e.preventDefault();
+            $(this).tab("show");
+        });
+    </script>
+</body>
+</html>

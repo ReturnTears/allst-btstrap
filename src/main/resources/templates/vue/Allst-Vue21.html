@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+
+<div id="app">
+    <h3>{{ msg }}</h3>
+    <blog-post post-title="test self component"></blog-post>
+    <didi-component></didi-component>
+</div>
+
+<script type="text/javascript">
+    // 全局注册组件(自定义1)
+    Vue.component('blog-post', {
+        // 在 JavaScript 中是 camelCase 的
+        props: ['postTitle'],
+        template: '<h3>{{ postTitle }}</h3>'
+    });
+
+    // 全局注册组件(自定义2)
+//    Vue.component('didi-component', DIDIComponent);
+//    DIDIComponent: Vue.extend({
+//        template: '<h3>{{msg}}</h3>'
+//    });
+    // 全局注册组件(自定义3)
+    Vue.component('didi-component', {
+        template: '<div>A Custom Component</div>'
+    });
+
+
+    // ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg:'start component'
+        },
+        methods: {}
+    })
+</script>
+</body>
+</html>

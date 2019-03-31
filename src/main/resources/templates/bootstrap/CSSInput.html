@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Input</title>
+    <link rel="stylesheet" href="assert/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <!-- 基本输入框 -->
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon">@</span>
+            <input type="text" class="form-control" placeholder="USERNAME">
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="PASSWORD">
+            <span class="input-group-addon">.00</span>
+        </div>
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon">$$</span>
+            <input type="text" class="form-control" placeholder="INPUT">
+            <span class="input-group-addon">.00</span>
+        </div>
+
+        <!--  -->
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default">Hi</button>
+                    </span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="checkbox">
+                    </span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="radio">
+                    </span>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action<span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Hello</a></li>
+                            <li><a href="#">Hello</a></li>
+                            <li><a href="#">Hello</a></li>
+                            <li><a href="#">Hello</a></li>
+                            <li><a href="#">Hello</a></li>
+                        </ul>
+                    </div>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap是依赖jQuery的 -->
+    <script type="text/javascript" src="" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

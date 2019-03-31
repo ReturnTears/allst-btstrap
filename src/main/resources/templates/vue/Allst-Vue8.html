@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-Props</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.9/vue.js"></script>-->
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+        #app {
+            margin: 1em;
+            font-size: 1.2em;
+        }
+        .component div {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 案列1 -->
+    <my-component :parent-msg="msg"></my-component>
+    <!-- 案例2,在案例1的基础上做的小修改 -->
+    <my-component parent-msg="msg"></my-component>
+</div>
+<script type="text/x-template" id="my-component">
+    <div class="component">
+        <div> ParentMsg:{{parentMsg}}</div>
+        <div> childMsg:{{msg}}</div>
+    </div>
+</script>
+<script>
+    // props里面写的是parentMsg 而对应着html中的parent-msg
+    //register
+    Vue.component('my-component',{
+        props: ['parentMsg'],
+        template: '#my-component',
+        data: function () {
+            return {
+                msg: 'Msg of Child!'
+            }
+        }
+    });
+    // a root instarnce
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'Msg of Parent!'
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Tab</title>
+    <link rel="stylesheet" href="assert/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <!--<link rel="stylesheet" href="asserts/css/signin.css" th:href="@{/asserts/css/signin.css}">-->
+</head>
+<body>
+    <!-- 详解Tab:分为基本表格:table
+                条形状表格:table table-striped
+                带边框的表格:table-bordered
+                鼠标悬停的效果:table-hover
+                紧缩的表格:table-condensed
+                状态类的响应式表格: -->
+    <div class="container">
+        <table class="table table-condensed">
+            <thead>
+                <tr class="active">
+                    <th>表格标题</th>
+                    <th>表格标题</th>
+                    <th>表格标题</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="success">
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                </tr>
+                <tr class="info">
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                </tr>
+                <tr class="warning">
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                </tr>
+                <tr class="danger">
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                </tr>
+                <tr>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                    <td>表格单元格</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

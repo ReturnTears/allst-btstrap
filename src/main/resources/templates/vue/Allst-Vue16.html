@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Style</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+        /*颜色*/
+        .red {
+            color: red;
+        }
+        /*字宽*/
+        .thin {
+            font-weight: 200;
+        }
+        /*斜体*/
+        .italic {
+            font-style: italic;
+        }
+        /*激活状态*/
+        .active {
+            letter-spacing: 0.5em;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!-- html中使用css样式 -->
+    <h1 class="red thin">Hello Vue learning way </h1>
+    <!-- Vue中使用CSS样式,方式一：直接传递一个数组，这里的class需要使用v-bind做数据绑定 -->
+    <h1 :class="['red','thin','italic']">Hello Vue learning way </h1>
+    <!-- Vue中使用CSS样式,方式二：使用三元表达式 -->
+    <h1 :class="['thin','italic',flag?'active':'']">Hello Vue learning way </h1>
+    <!-- Vue中使用CSS样式,方式三：将三元表达式改为对象的形式,提高代码的可读性 -->
+    <h1 :class="['thin','italic', {'active':flag}]">Hello Vue learning way </h1>
+    <!-- Vue中使用CSS样式， -->
+    <h1 :class="{'thin':true, 'italic':true, 'active':true}">Hello Vue learning way </h1>
+    <h1 :class="classObj">Hello Vue learning way </h1>
+
+    <!-- 使用内联样式:style -->
+    <h1 :style="{color:'pink', 'font-weight':150}">使用内联样式</h1>
+    <h1 :style="styleObj">使用内联样式</h1>
+    <h1 :style="[styleObj, styleOby]">使用内联样式</h1>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello V-model',
+            flag: true,
+            classObj: {'thin':true, 'italic':true, 'active':true},
+            styleObj: {color:'block', 'font-weight':180},
+            styleOby: {'font-style': 'italic'}
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>

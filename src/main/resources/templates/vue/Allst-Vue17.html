@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue For</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <span>获取变量的值:<h1>{{msg}}</h1></span>
+    <span>获取数组的第一个值:<p>{{arr[0]}}</p></span>
+    <span>遍历数组元素:</span><p v-for="item in arr">{{item}}</p>
+    <span>遍历数组元素索引及值:<p v-for="(item, i) in arr">索引:{{i}} ---- 值:{{item}}</p></span>
+    <span>遍历复杂数组元素索引及值:</span>
+    <p v-for="user in list">索引:{{user.id}} ---- 值:{{user.name}}</p>
+    <p v-for="(user, j) in list">索引:{{j}} ---- ID:{{user.id}} ---- Name:{{user.name}}</p>
+    <span>For循环对象</span>
+    <!-- 主要：在遍历对象的k-v键值对时,分别有Value Key 索引(索引从0开始)可以遍历 -->
+    <p v-for="(val, key) in Person">Key:{{key}} --- Val:{{val}}</p>
+    <p v-for="(val, key, i) in Person">索引:{{i}} ---- Key:{{key}} --- Val:{{val}}</p>
+    <span>For迭代数字</span>
+    <!-- v-for迭代数字,数字从1开始 -->
+    <p v-for="num in 10">{{num}}</p>
+
+    <!-- 使用v-for的Key属性的使用 -->
+    <span>v-for循环中key属性的使用</span>
+    <div>
+        <label>id:<input type="text" v-model="id"/></label>
+        <label>name:<input type="text" v-model="name"/></label>
+        <input type="button" value="add" @click="add"/>
+        <!-- v-for循环的时候，key属性只能使用number/string,使用时需要v-bind属性绑定的形式 -->
+        <!-- 在使用v-for循环的时候，或者一些特殊情况，如果使用v-for有问题，
+              必须在使用v-for的同时指定唯一的字符串/数字类型 :key 值
+         -->
+        <p v-for="item in figure" :key="item.id">
+            <input type="checkbox"/>{{item.id}} --- {{item.name}}
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello Vue Learning Way ',
+            arr: [1,2,3,4,5,6],
+            id: '',
+            name: '',
+            list: [
+                {id: 1, name: 'one'},
+                {id: 2, name: 'two'},
+                {id: 3, name: 'three'},
+                {id: 4, name: 'four'}
+            ],
+            Person: {
+                id: 101,
+                name: 'YangY',
+                gender: '女'
+            },
+            figure: [
+                {id: 5, name: 'Five'},
+                {id: 6, name: 'Six'},
+                {id: 7, name: 'Seven'},
+                {id: 8, name: 'Eight'},
+                {id: 9, name: 'Nine'}
+            ]
+        },
+        methods: {
+            add() {
+                // 方式1
+                // this.figure.push({id: this.id, name: this.name});
+                // 方式2
+                this.figure.unshift({id: this.id, name: this.name})
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue-案例</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        a {
+            color: #333;
+            text-decoration:none;
+        }
+        .goods-item {
+            display: block;
+        }
+        .store-item {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div v-for="(index1, item) in goodsObj" class="store-item">
+    <p>
+        <span v-html="item.name"></span>
+        <label>
+            <input type="checkbox" name="all" v-on:click="chooseShopGoods(index1)" v-model="item.checked" />
+            <span>全选</span>
+        </label>
+    </p>
+    <a href="javascript:;" rel="external nofollow" v-for="(index, data) in item.list" class="goods-item">
+        <input type="checkbox" v-model="data.checked" v-on:click="choose(index1, index)" />
+        商品名称:<span v-html="data.name"></span> |
+        价格:<span v-html="data.price"></span>
+    </a>
+</div>
+<label>
+    <input type="checkbox" name="all" v-on:click="chooseAllGoods()" v-model="allChecked" />
+    <span>全选</span>
+</label>
+<script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>
+<script>
+    var goodsObj = [
+        {
+            name : '大胖的店',
+            checked : false,
+            list : [
+                {
+                    name : '麻辣二胖',
+                    price : 23.00,
+                    realStock : 10,
+                    fare : 1.5,
+                    num : 1,
+                    checked : false,
+                },
+
+                {
+                    name : '香辣二胖',
+                    price : 21.00,
+                    realStock : 2,
+                    fare : 1.5,
+                    num : 2,
+                    checked : false,
+                },
+
+                {
+                    name : '红烧二胖',
+                    price : 88.00,
+                    realStock : 8,
+                    fare : 1.5,
+                    num : 4,
+                    checked : false,
+                }
+            ]
+        },
+
+        {
+            name : '二胖的店',
+            checked : false,
+            list : [
+                {
+                    name : '漂亮的裙子',
+                    price : 166.00,
+                    realStock : 10,
+                    fare : 2,
+                    num : 1,
+                    checked : false,
+                },
+
+                {
+                    name : '漂亮的短袖',
+                    price : 188.00,
+                    realStock : 2,
+                    fare : 1.5,
+                    num : 2,
+                    checked : false,
+                },
+
+                {
+                    name : '漂亮的鞋子',
+                    price : 299.00,
+                    realStock : 1,
+                    fare : 3,
+                    num : 1,
+                    checked : false,
+                }
+            ]
+        },
+
+        {
+            name : '胖胖的店',
+            checked : false,
+            list : [
+                {
+                    name : '福满多',
+                    price : 3.00,
+                    realStock : 10,
+                    fare : .5,
+                    num : 10,
+                    checked : false,
+                },
+
+                {
+                    name : '精品卫龙',
+                    price : 1.50,
+                    realStock : 2,
+                    fare : 2,
+                    num : 2,
+                    checked : false,
+                },
+
+                {
+                    name : '周长江',
+                    price : 2.50,
+                    realStock : 3,
+                    fare : 5,
+                    num : 2,
+                    checked : false,
+                }
+            ]
+        },
+    ];
+    var vue = new Vue({
+        el : 'body',
+        data : {
+            goodsObj : goodsObj,
+            allChecked : false
+        },
+        ready : function() {
+
+        },
+        methods : {
+            // 全部商品全选
+            chooseAllGoods : function() {
+                var flag = true;
+                if ( this.allChecked ) {
+                    flag = false;
+                }
+                for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
+                    this.goodsObj[i]['checked'] = flag;
+                    var list = this.goodsObj[i]['list'];
+                    for ( var k = 0, len1 = list.length; k < len1; k++ ) {
+                        list[k]['checked'] = flag;
+                    }
+                }
+                this.allChecked = !this.allChecked;
+            },
+
+            // 每个店铺全选
+            chooseShopGoods : function( index) {
+                var list = this.goodsObj[index]['list'],
+                    len = list.length;
+                if ( this.goodsObj[index]['checked'] ) {
+                    for (var i = 0; i < len; i++ ) {
+                        list[i]['checked'] = false;
+                    }
+                } else {
+                    for (var i = 0; i < len; i++ ) {
+                        list[i]['checked'] = true;
+                    }
+                }
+                this.goodsObj[index]['checked'] = !this.goodsObj[index]['checked'];
+
+                // 判断是否选择所有商品的全选
+                this.isChooseAll();
+            },
+
+            // 单个选择
+            choose : function( index1, index) {
+                var list = this.goodsObj[index1]['list'],
+                    len = list.length;
+                if ( list[index]['checked'] ) {
+                    this.goodsObj[index1]['checked'] = false;
+                    this.allChecked = false;
+                    list[index]['checked'] = !list[index]['checked'];
+                } else {
+                    list[index]['checked'] = !list[index]['checked'];
+
+                    // 判断是否选择当前店铺的全选
+                    var flag = true;
+                    for (var i = 0; i < len; i++ ) {
+                        if ( list[i]['checked'] == false ) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    flag == true ? this.goodsObj[index1]['checked'] = true : this.goodsObj[index1]['checked'] = false;
+                }
+
+                // 判断是否选择所有商品的全选
+                this.isChooseAll();
+            },
+
+            // 判断是否选择所有商品的全选
+            isChooseAll : function() {
+                var flag1 = true;
+                for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
+                    if ( this.goodsObj[i]['checked'] == false ) {
+                        flag1 = false;
+                        break;
+                    }
+                }
+                flag1 == true ? this.allChecked = true : this.allChecked = false;
+            },
+        }
+    })
+</script>
+</body>
+</html>

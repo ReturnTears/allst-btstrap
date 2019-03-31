@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue修改品牌列表</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
+</head>
+<body>
+
+<div id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label>ID:
+                <input type="text" v-model="id"/>
+            </label>
+            <label>Name:
+                <input type="text" v-model="name" class="form-control"/>
+            </label>
+            <input type="button" value="添加" @click="add" class="btn btn-primary"/>
+        </div>
+    </div>
+    <!-- 快捷键:bs3-table直接创建下面的表格
+        table-striped:隔行变色
+     -->
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>CTime</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in list" :key="item.id">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime}}</td>
+                <td>
+                    <a href="javascript:;">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: "修改品牌列表",
+            id: "",
+            name: "",
+            list: [
+                {id: 1, name: "阿尔法·罗密欧", ctime: new Date()},
+                {id: 2, name: "阿斯顿马丁", ctime: new Date()},
+                {id: 3, name: "保时捷·帕拉梅拉", ctime: new Date()}
+            ]
+        },
+        methods: {
+            add() {
+
+            }
+        }
+    });
+</script>
+</body>
+</html>

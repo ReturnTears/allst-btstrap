@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Calculator</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <input type="text" v-model="n1"/>
+    <select v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="×">×</option>
+        <option value="÷">÷</option>
+    </select>
+    <input type="text" v-model="n2"/>
+    <input type="button" value="=" @click="calc"/>
+    <input type="text" v-model="result"/>
+    <!--<input type="button" value="=" @click="calca"/>-->
+    <!--<input type="text" v-model="res"/>-->
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello V-model',
+            n1: 0,
+            n2: 0,
+            result: 0,
+            opt: '-',
+            res: 0
+        },
+        methods: {
+            calc() {
+                switch (this.opt) {
+                    case '+':
+                        this.result = parseInt(this.n1) + parseInt(this.n2);
+                        break;
+                    case '-':
+                        this.result = parseInt(this.n1) - parseInt(this.n2);
+                        break;
+                    case '×':
+                        this.result = parseInt(this.n1) * parseInt(this.n2);
+                        break;
+                    case '÷':
+                        this.result = parseInt(this.n1) / parseInt(this.n2);
+                        break;
+                }
+            },
+            // 该方式少用，目前好像仅仅可以使用+ -
+//            calca() {
+//                var str = 'parseInt(this.n1)' + this.opt + 'parseInt(this.n2)';
+//                this.res = eval(str)
+//            }
+        }
+    })
+</script>
+</body>
+</html>

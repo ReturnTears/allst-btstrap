@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue v-if/v-show</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{msg}}</h1>
+    <!--v-if/v-show的特点：
+        v-if:每次都会重新删除或创建元素
+        v-show:每次不会重新进行DOM的删除和创建操作，只是切换了元素的display：none样式
+     -->
+    <input type="button" value="按钮" @click="toggle"/>
+    <input type="button" value="按钮" @click="flag=!flag"/>
+    <!-- v-if有较高的切换性能消耗 -->
+    <h3 v-if="flag">这是V-if控制的元素</h3>
+    <!-- v-show有较高的初始渲染消耗 -->
+    <h3 v-show="flag">这是V-show控制的元素</h3>
+</div>
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'v-if/v-show',
+            flag: true
+        },
+        methods: {
+            toggle() {
+                this.flag = !this.flag
+            }
+        }
+    })
+</script>
+</body>
+</html>

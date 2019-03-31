@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Button</title>
+    <link rel="stylesheet" href="assert/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <button type="button" class="btn btn-default">default</button>
+        <button type="button" class="btn btn-primary">primary</button>
+        <button type="button" class="btn btn-success">success</button>
+        <button type="button" class="btn btn-info">info</button>
+        <button type="button" class="btn btn-warning">warning</button>
+        <button type="button" class="btn btn-link">link</button>
+        <button type="button" class="btn btn-danger">danger</button>
+    </div>
+
+    <div class="div">
+        <button type="button" class="btn btn-info btn-lg">info</button>
+        <button type="button" class="btn btn-info">info</button>
+        <button type="button" class="btn btn-info btn-sm">info</button>
+        <button type="button" class="btn btn-info btn-xs">info</button>
+    </div>
+    <!-- 按钮的属性,让其充满富集容器 -->
+    <button type="button" class="btn btn-default btn-block" disabled="disabled">hello</button>
+    <!-- a标签可以替代button -->
+    <a href="#" class="btn btn-default btn-lg active" role="button">default</a>
+
+    <input class="btn btn-default" type="button" value="input">
+
+    <!--  -->
+    <img src="resource/pic/0(1).jpeg" alt="pic" class="img-circle">
+    <img src="resource/pic/0(4).jpg" alt="pic" class="img-rounded">
+    <img src="resource/pic/0(4).jpg" alt="pic" class="img-thumbnail">
+</body>
+</html>

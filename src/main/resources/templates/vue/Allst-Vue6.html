@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.js-数量选择器(2层数据结构)</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!--<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>-->
+    <style type="text/css">
+        *{
+            padding:0;
+            margin: 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: .1px;
+            font-size: .1em;
+            line-height: 0;
+            clear: both;
+        }
+        .quantity-selector {
+            margin: 0 auto;
+            width: 8.571rem;
+            line-height: 30px;
+            border: 1px solid #d1d6e4;
+            border-radius: 3px;
+        }
+        .quantity-selector .reduce,
+        .quantity-selector .add {
+            float: left;
+            width: 33.33%;
+            border-right: 1px solid #d1d6e4;
+            text-align: center;
+            cursor: pointer;
+        }
+        .quantity-selector .number {
+            float: left;
+            width: 33.33%;
+            height: 30px;
+            border: none;
+            padding-left: 10px;
+            text-align: center;
+        }
+        .quantity-selector .add {
+            border-left: 1px solid #d1d6e4;
+            border-right: none;
+        }
+        .quantity-selector .disable {
+            color: #d2d2d2;
+            cursor: default;
+        }
+
+        /*店铺开始*/
+        .store-item {
+            width: 600px;
+            margin: 30px auto;
+        }
+        .store-item th {
+            height: 40px;
+            background: #d2d2d2;
+            -webkit-text-stroke: 1px #ff7500;
+            font-size: 18px;
+        }
+        .store-item td {
+            height: 60px;
+            text-align: center;
+        }
+        .cal-store-box {
+            text-align: right;
+        }
+        .store-footer {
+            width: 600px;
+            margin: 50px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        /*店铺结束*/
+    </style>
+</head>
+<body>
+<div class="store-item" v-for="(index1, item) in goodsObj">
+    <p v-html="index1"></p>
+    <table class="store-item">
+        <col width="10%"/>
+        <col width="10%"/>
+        <col width="20%"/>
+        <col width="10%"/>
+        <col width="40%"/>
+        <col width="10%"/>
+        <thead class="thead">
+        <tr>
+            <th>选择</th>
+            <th>商品</th>
+            <th>单价</th>
+            <th>运费</th>
+            <th>数量</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(index, data) in item">
+            <td>
+
+            </td>
+            <td>
+                <p><span v-html="data.name"></span></p>
+            </td>
+            <td v-html="(data.price).toFixed(2)"></td>
+            <td v-html="(data.fare).toFixed(2)"></td>
+            <td>
+                <div class="quantity-selector clearfix">
+                    <span class="reduce" v-on:click="numChange(index1, $index, -1)" v-bind:class="{ 'disable' : data.num==1 }">－</span>
+                    <input type="number" v-bind:value="data.num" class="number" v-bind:data-realStock="data.realStock" v-on:keyUp="numEntry(index1, $index)" v-on:keyDown="numEntry(index1, $index)" v-model="data.num"/>
+                    <span class="add" v-on:click="numChange(index1, $index, 1)" v-bind:class="{ 'disable' : data.num==data.realStock }">＋</span>
+                </div>
+            </td>
+            <td>
+                <a href="javascript:;" rel="external nofollow" >删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="cal-store-box">
+        <p>店铺总运费: <span v-html="calEveryFare(index1)"></span></p>
+        <p>店铺商品总金额: <span v-html="calEveryStore(index1)"></span></p>
+    </div>
+</div>
+
+<div class="store-footer">
+    <!-- <a href="javascript:;" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" >
+      <input type="checkbox" />
+      <span>全选</span>
+    </a> -->
+    <div class="cal-box">
+        <p>商品总金额:<span v-html="totalFare"></span></p>
+        <p>运费总金额:<span v-html="totalMoney"></span></p>
+    </div>
+</div>
+
+<!--<script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>-->
+<script>
+    var goodsObj = {
+        '大胖的店' : [
+            {
+                name : '康师傅',
+                price : 23.00,
+                realStock : 10,
+                fare : 1.5,
+                num : 1
+            },
+
+            {
+                name : '今麦郎',
+                price : 26.00,
+                realStock : 2,
+                fare : 1.5,
+                num : 2
+            },
+
+            {
+                name : '比巴卜',
+                price : 88.00,
+                realStock : 8,
+                fare : 1.5,
+                num : 4
+            }
+        ],
+
+        '二胖的店' : [
+            {
+                name : '好看的鞋子',
+                price : 23.00,
+                realStock : 7,
+                fare : 2,
+                num : 1
+            },
+
+            {
+                name : '好看的裙子',
+                price : 26.00,
+                realStock : 5,
+                fare : 2,
+                num : 5
+            },
+
+            {
+                name : '好看的短袖',
+                price : 88.00,
+                realStock : 10,
+                fare : 2,
+                num : 1
+            }
+        ],
+
+        '胖胖的店' : [
+            {
+                name : '福满多1号',
+                price : 26.00,
+                realStock : 7,
+                fare : 3,
+                num : 1
+            },
+
+            {
+                name : '福满多2号',
+                price : 26.00,
+                realStock : 7,
+                fare : 3,
+                num : 1
+            },
+
+            {
+                name : '经典卫龙辣条',
+                price : 16.00,
+                realStock : 50,
+                fare : 3,
+                num : 5
+            },
+
+            {
+                name : '霸王牛津',
+                price : 80.00,
+                realStock : 10,
+                fare : 3,
+                num : 6
+            }
+        ]
+    };
+    var vue = new Vue({
+        el : 'body',
+        data : {
+            goodsObj : goodsObj,
+            totalMoney : 0,
+            totalFare : 0
+        },
+        ready : function() {
+            this.calTotalMoney();
+            this.calTotalFare();
+        },
+        methods : {
+            numChange : function(index1, index, numChange) {
+                var goods = this.goodsObj[index1][index],
+                    oThis = this;
+                if ( numChange == 1 ) {
+                    goods.num++;
+                } else if ( numChange == -1 ) {
+                    goods.num--;
+                }
+
+                if ( goods.num <= 1 ) {
+                    goods.num = 1;
+                }
+
+                if ( goods.num >= goods.realStock ) {
+                    goods.num = goods.realStock;
+                }
+                this.calTotalMoney();
+            },
+
+            numEntry : function(index1, index) {
+                var goods = this.goodsObj[index1][index];
+                if ( goods.num <=1 ) {
+                    goods.num = 1;
+                }
+
+                if ( goods.num > goods.realStock ) {
+                    goods.num = goods.realStock;
+                }
+                this.calTotalMoney();
+            },
+
+            calEveryStore : function(index) {
+                var everyStoreMoney = 0;
+                this.goodsObj[index].forEach(function(item, index, arr) {
+                    everyStoreMoney += parseFloat(item.price) * parseFloat(item.num);
+                });
+                return everyStoreMoney.toFixed(2);
+            },
+
+            calEveryFare : function(index) {
+                var everyStoreFare = 0;
+                this.goodsObj[index].forEach(function(item, index, arr) {
+                    everyStoreFare += parseFloat(item.fare) * parseFloat(item.num);
+                });
+                return everyStoreFare.toFixed(2);
+            },
+
+            calTotalMoney : function () {
+                var oThis = this;
+                this.totalMoney = 0;
+                for ( var x in this.goodsObj ) {
+                    this.goodsObj[x].forEach(function(item, index, arr) {
+                        oThis.totalMoney += parseFloat(item.price) * parseFloat(item.num);
+                    });
+                }
+                this.totalMoney = this.totalMoney.toFixed(2);
+            },
+
+            calTotalFare : function () {
+                var oThis = this;
+                this.totalFare = 0;
+                for ( var x in this.goodsObj ) {
+                    this.goodsObj[x].forEach(function(item, index, arr) {
+                        oThis.totalFare += parseFloat(item.fare) * parseFloat(item.num);
+                    });
+                }
+                this.totalFare = this.totalFare.toFixed(2);
+            },
+
+        }
+    })
+</script>
+</body>
+</html>

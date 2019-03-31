@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue品牌列表案例</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <link rel="stylesheet" href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{msg}}</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label>
+                ID:<input type="text" class="form-control" v-model="id"/>
+            </label>
+            <label>
+                <!-- 这里用到了按键修饰符enter键的键盘码13,f2的键盘码是113 -->
+                Name:<input type="text" class="form-control" v-model="name" @keyup.f2="add"/>
+            </label>
+            <!-- 在Vue中，使用事件绑定机制，为元素指定处理函数的时候、如果加了小括号就可以给函数传参了 -->
+            <input type="button" value="添加" class="btn btn-primary" @click="add()"/>
+            <label>
+                <!-- id这里用于进入页面时我们就获取到搜索框的焦点, 注意在Vue中约定了所有指令在调用时以v-开头 -->
+                搜索名称关键字:
+                <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'pink'"/>
+            </label>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>CTime</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--
+                之前，v-for中的数据是直接从data上的list中直接渲染过来的
+                现在，我们自定义一个search方法，同时把所有的关键字，通过传参的形式传递给search方法
+                在search方法内部，通过执行for循环，把所有符合搜索关键字的数据，保存到一个新数组中返回
+             -->
+            <tr v-for="item in search(keywords)" :key="item.id">
+                <td>{{item.id}}</td>
+                <td v-text="item.name"></td>
+                <td>{{item.ctime | dateFormat()}}</td>
+                <td>
+                    <a href="javascript:;" @click.prevent="del(item.id)">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="app2">
+    <p>{{msg}}</p>
+    <p v-color="'blue'" v-fontweight="777" v-fontsize="'22'">{{date | dateFormat}}</p>
+</div>
+
+<script type="text/javascript">
+    // 全局的过滤器,进行时间格式化，所谓全局过滤器，就是所有的VM实例都共享
+    Vue.filter("dateFormat", function (dateStr, pattern='') {
+        var dt = new Date(dateStr);
+        var year = dt.getFullYear();
+        // 对月份以及日期、时分秒不足两位的进行填充处理
+        var month = (dt.getMonth() + 1).toString().padStart(2, '0');
+        var day = dt.getDate().toString().padStart(2, '0');
+        var hh = dt.getHours().toString().padStart(2, '0');
+        var mm = dt.getMinutes().toString().padStart(2, '0');
+        var ss = dt.getSeconds().toString().padStart(2, '0');
+        // 显示方式1
+        // return year + '-' + month + '-' + day;
+        // 显示方式2 pattern && pattern.toLowerCase()
+        if (pattern.toLowerCase() === 'yyyy-MM-dd') {
+            return `${year}-${month}-${day}`;
+        }
+        return `${year}-${month}-${day} ${hh}:${mm}:${ss}`;
+    });
+
+    // 自定义全局按键修饰符
+    Vue.config.keyCodes.f2 = 113;
+
+    // 使用 Vue.directive() 定义全局的指令 v-focus
+    // 其中，参数1：指令的名称，注意，在定义的时候，指令的名称前面不需要增加v-前缀,调用的时候需要加v-
+    // 参数2是一个对象，这个对象上有一些指令相关的函数，这些函数可以在特定的阶段执行相关的操作
+    Vue.directive('focus', {
+        // 每个指令绑定到元素上时，会立即执行这个bind函数，只执行一次
+        bind: function (el) {
+            // 注意：在每个函数中，每一个参数，永远都是el,表示被绑定了指令的那个元素，这个el参数是一个原生的JS对象
+            // 在元素刚绑定了指令的时候，还没有插入到DOM中去，这个时候调用focus是没有作用的
+            // 因为一个元素只有在查插入到DOM之后才能获取焦点
+            // el.focus()
+        },
+        // inserted表示元素插入到DOM中的时候，会执行inserted的函数
+        // 和JS有关的操作最好在inserted中去执行，放在JS不生效
+        inserted: function (el) {
+            el.focus()
+        },
+        // 当VNode更新的时候，会执行updated,可能会执行多次
+        updated: function () {
+            
+        }
+    });
+
+    // 定义全局指令v-color ,修改字体颜色
+    Vue.directive('color', {
+        // 样式只要通过指令绑定给了元素，不管这个元素有没有被插入到页面中去，这个元素肯定有一个内联样式
+        // 将来元素肯定会显示到页面中，这时候，浏览器的渲染引擎必然会解析样式，应用给这个元素
+        // 有样式有关的操作最好在bind中
+        // binding表示钩子函数的参数,是形参，可以随意指定,只要保持一致就可以
+        bind: function (el, binding) {
+            // el.style.color = 'red'
+            el.style.color = binding.value
+        }
+    });
+
+    // VM实例1
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hi Vueven7',
+            id: '',
+            name: '',
+            keywords: '',
+            list: [
+                {id: 1, name: '奔驰', ctime: '2019-01-01 12:00:01'},
+                {id: 2, name: '宝马', ctime: new Date()}
+            ]
+        },
+        methods: {
+            add() {
+                var car = {id: this.id, name: this.name, ctime: new Date()};
+                this.list.push(car);
+                this.id = this.name = '';
+            },
+            del(id) {
+                // del方式1
+//                this.list.some((item, i) => {
+//                    if (item.id == id) {
+//                        this.list.splice(i, 1);
+//                        return true;
+//                    }
+//                });
+                // del方式2
+                var index = this.list.findIndex(item => {
+                    if (item.id == id) {
+                        return true;
+                    }
+                });
+                this.list.splice(index, 1)
+            },
+            // 根据关键字搜索
+            search(keywords) {
+                // 搜索实现方式1
+//                var newList = [];
+//                this.list.forEach(item => {
+//                    if (item.name.indexOf(keywords) != -1) {
+//                        newList.push(item)
+//                    }
+//                });
+//                return newList;
+
+                // 搜索实现方式2,方式2需要返回，方式1不需要
+                // 注意：forEach some filter findIndex 这些都属于数组的新方法
+                // 都会对数组中的每一项进行遍历，执行相应的操作
+                return this.list.filter(item => {
+//                    if (item.name.indexOf(keywords) != -1)
+                    // 注意：ES6中，为字符串提供了一个新方法，叫作String.prototype.includes('要包含的字符串')
+                    // 如果包含返回true,否则返回false
+                    if (item.name.includes(keywords)) {
+                        return item;
+                    }
+                })
+            }
+        }
+    });
+
+    // VM实例2
+    var vm2 = new Vue({
+        el: '#app2',
+        data: {
+            msg: 'VM实例2可以调用实例1的过滤器',
+            date: new Date()
+        },
+        methods: {
+
+        },
+        // 定义私有过滤器,过滤器有两个条件[过滤器名称和处理函数]
+        // 过滤器的调用采用就近原则，如果私有过滤器和全局过滤器的名称一致了，这时候优先调用私有过滤器
+        filters: {
+            dateFormat: function (dateStr, pattern='') {
+                var dt = new Date(dateStr);
+                var year = dt.getFullYear();
+                // 对月份以及日期、时分秒不足两位的进行填充处理
+                var month = (dt.getMonth() + 1).toString().padStart(2, '0');
+                var day = dt.getDate().toString().padStart(2, '0');
+                var hh = dt.getHours().toString().padStart(2, '0');
+                var mm = dt.getMinutes().toString().padStart(2, '0');
+                var ss = dt.getSeconds().toString().padStart(2, '0');
+                // 显示方式1
+                // return year + '-' + month + '-' + day;
+                // 显示方式2 pattern && pattern.toLowerCase()
+                if (pattern.toLowerCase() === 'yyyy-MM-dd') {
+                    return `${year}-${month}-${day}`;
+                }
+                return `${year}-${month}-${day} ${hh}:${mm}:${ss}`;
+            }
+        },
+        // 自定义私有指令
+        directives: {
+            // 设置字体粗细
+            'fontweight': {
+                bind: function (el, binding) {
+                    el.style.fontWeight = binding.value
+                }
+            },
+            // 函数的简写
+            // 注意：这个function等同于把代码写到了bind和update中去
+            'fontsize': function (el, binding) {
+                el.style.fontSize = parseInt(binding.value) + 'px'
+            }
+        }
+    })
+
+    // 进入页面时获取到搜索框的焦点,使用原生的JS来写,但是不提倡这样做
+    // document.getElementById('search').focus()
+</script>
+</body>
+</html>

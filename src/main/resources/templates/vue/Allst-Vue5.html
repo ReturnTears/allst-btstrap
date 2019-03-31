@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vuejs-数量选择器(1层数据结构)</title>
+    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
+    <style type="text/css">
+        *{
+            padding:0;
+            margin: 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: .1px;
+            font-size: .1em;
+            line-height: 0;
+            clear: both;
+        }
+        .quantity-selector {
+            margin-bottom: 20px;
+            width: 8.571rem;
+            line-height: 2.857rem;
+            border: 1px solid #d1d6e4;
+            border-radius: 3px;
+        }
+        .quantity-selector .reduce,
+        .quantity-selector .add {
+            float: left;
+            width: 33.33%;
+            border-right: 1px solid #d1d6e4;
+            text-align: center;
+            cursor: pointer;
+        }
+        .quantity-selector .number {
+            float: left;
+            width: 33.33%;
+            height: 2.857rem;
+            padding: .5rem 0;
+            line-height: 1rem;
+            border: none;
+            text-align: center;
+        }
+        .quantity-selector .add {
+            border-left: 1px solid #d1d6e4;
+            border-right: none;
+        }
+        .quantity-selector .disable {
+            color: #d2d2d2;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div v-for="data in goodsList">
+    <p>商品数量 ：<span v-html="data.num"></span></p>
+    <p>商品库存 ：<span v-html="data.realStock"></span></p>
+    <div class="quantity-selector clearfix">
+        <span class="reduce" v-on:click="numChange($index, -1)" v-bind:class="{ 'disable' : data.num==1 }">－</span>
+        <input type="number" v-bind:value="data.num" class="number" v-bind:data-realStock="data.realStock" v-on:keyUp="numEntry($index)" v-on:keyDown="numEntry($index)" v-model="data.num"/>
+        <span class="add" v-on:click="numChange($index, 1)" v-bind:class="{ 'disable' : data.num==data.realStock }">＋</span>
+    </div>
+</div>
+
+<!--<script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>-->
+<script>
+    var vue = new Vue({
+        el : 'body',
+        data : {
+            goodsList : [
+                {
+                    name : '山本汉方1',
+                    price : '19.00',
+                    realStock : 10,
+                    num : 1
+                },
+                {
+                    name : '山本汉方1',
+                    price : '19.00',
+                    realStock : 7,
+                    num : 8
+                },
+                {
+                    name : '山本汉方1',
+                    price : '19.00',
+                    realStock : 2,
+                    num : 2
+                },
+            ]
+        },
+        ready : function() {},
+        methods : {
+            numChange : function(index, numChange) {
+                var goods = this.goodsList[index];
+                if ( numChange == 1 ) {
+                    goods.num++;
+                } else if ( numChange == -1 ) {
+                    goods.num--;
+                }
+
+                if ( goods.num <= 1 ) {
+                    goods.num = 1;
+                }
+
+                if ( goods.num >= goods.realStock ) {
+                    goods.num = goods.realStock;
+                }
+            },
+
+            numEntry : function(index) {
+                var goods = this.goodsList[index];
+                if ( goods.num <=1 ) {
+                    goods.num = 1;
+                }
+
+                if ( goods.num > goods.realStock ) {
+                    goods.num = goods.realStock;
+                }
+
+            }
+
+        }
+    })
+</script>
+</body>
+</html>
