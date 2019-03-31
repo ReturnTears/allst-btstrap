@@ -1,6 +1,7 @@
 package allst.boot.strap.mapper;
 
 import allst.boot.strap.bean.Brand;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -29,8 +30,16 @@ public interface BrandMapper {
 
     /**
      * 添加brand信息
+     * @param brand
      * @return
      */
-    @Insert("insert into brand (brandId, brandName) values (#{brandID}, #{brandName})")
-    Integer insertBrand(Integer brandId, String brandName);
+    @Insert("insert into brand (brandID, brandName) values (#{brand.getBrandID}, #{brand.getBrandName})")
+    Integer insertBrand(Brand brand);
+
+    /**
+     * 根据brandID删除Brand信息
+     * @param brandID
+     */
+    @Delete("delete from brand where brandID = #{brandID}")
+    void delBrand(Integer brandID);
 }

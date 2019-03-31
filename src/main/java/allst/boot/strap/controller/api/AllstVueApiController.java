@@ -35,8 +35,22 @@ public class AllstVueApiController {
         return brandMapper.getBrands();
     }
 
-    @PostMapping("/brand")
-    public Integer insertBrand(Integer brandId, String brandName) {
-        return brandMapper.insertBrand(brandId, brandName);
+    /**
+     * 插入有问题，待处理        todo
+     * @param brandID
+     * @param brandName
+     * @return
+     */
+    @PostMapping("/addBrand")
+    public Integer insertBrand(Integer brandID, String brandName) {
+        Brand brand = new Brand();
+        brand.setBrandID(brandID);
+        brand.setBrandName(brandName);
+        return brandMapper.insertBrand(brand);
+    }
+
+    @DeleteMapping("/delBrand")
+    public void delBrand(Integer brandID) {
+        brandMapper.delBrand(brandID);
     }
 }

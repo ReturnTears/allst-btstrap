@@ -42,11 +42,11 @@
         <tbody>
             <!-- key只接受字符串或number -->
             <tr v-for="item in list" :key="item.brandID">
-                <td>{{item.brandID}}</td>
-                <td>{{item.brandName}}</td>
-                <td>{{item.brandCTime}}</td>
+                <td th:v-cloak>{{item.brandID}}</td>
+                <td th:v-cloak>{{item.brandName}}</td>
+                <td th:v-cloak>{{item.brandCTime}}</td>
                 <td>
-                    <a href="javascript:;">删除</a>
+                    <a href="javascript:;" @click.prevent="del(item.brandID)">删除</a>
                 </td>
             </tr>
         </tbody>
@@ -54,6 +54,11 @@
 </div>
 
 <script>
+    // 利用vue-resource解决域名替换: http://localhost:8081
+    // 如果我们配置了全局的请求数据的接口(根域名),则每次单独发起http请求的时候，请求的url路径应该以相对路径开头
+    Vue.http.options.root = 'http://localhost:8081/';
+
+    // 创建Vue实例
     var vm = new Vue({
         el: '#app',
         data: {
@@ -73,9 +78,9 @@
             //      第二个参数:要提交的服务器数据，以对象形式提交给服务器
             //      第三个参数:是一个配置对象，要以那种表单数据类型提交过去
             add() {
-                this.$http.post('',{brandID: this.id, brandName: this.name},{emulateJSON: true})
+                this.$http.post('vueApi/addBrand?brandID=',{brandID: this.id, brandName: this.name}, {emulateJSON: true})
                     .then(result => {
-                        if (result.body.status === 0) {
+                        if (result.status === 200) {
                             this.getAllList()
                         } else {
                             alert('添加失败.')
@@ -88,13 +93,24 @@
             // 3、this.$http.get('url').then(function(result){})
             // 4、先判断result.status = 0 ？成功 ： 失败，
             getAllList() {
-                this.$http.get('http://localhost:8081/vueApi/brand').then(result => {
-                    console.log(result.body);
+                this.$http.get('vueApi/brand').then(result => {
                     this.list = result.body;
+                });
+            },
+            // 删除brand信息
+            del(brandID) {
+                this.$http.delete('vueApi/delBrand?brandID=' + brandID).then(result => {
+                    // success
+                    if (result.status === 200) {
+                        this.getAllList();
+                        alert('删除成功.');
+                    } else {
+                        alert('删除失败.')
+                    }
                 });
             }
         },
-        // 申明钩子函数
+        // 声明钩子函数
         created() {
             this.getAllList();
         }
