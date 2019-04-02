@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+    <script type="text/javascript" th:src="@{webjars/jquery/3.1.1/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Spring Boot文件下载</h3>
+    </div>
+</div>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">用户信息列表</h3>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table table-responsive">
+            <table class="table table-bordered" id="userTable">
+                <tbody class="text-center">
+                <tr>
+                    <td><img th:src="@{'upload/'+${user.head.originalFilename}}" height="30"></td>
+                    <td th:text="${user.userName}">用户名</td>
+                    <td><a th:href="@{download(filename=${user.head.originalFilename })}">下载</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
