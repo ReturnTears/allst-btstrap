@@ -1,7 +1,5 @@
 package allst.boot.strap.common;
 
-import com.sun.deploy.net.HttpResponse;
-
 import java.util.HashMap;
 import java.util.Map;
 
