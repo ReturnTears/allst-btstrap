@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,6 +34,12 @@ public class AllstBtstrapApplicationTests {
 		Connection connection = dataSource.getConnection();
 		System.out.println(connection);
 		connection.close();
+	}
+
+	@Test
+	public void testLocalDate() {
+		LocalDate local = LocalDate.now();
+		System.out.println(local.toString() instanceof String);
 	}
 
 }
