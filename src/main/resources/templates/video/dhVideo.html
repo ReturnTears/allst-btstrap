@@ -1,10 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>video</title>
+    <script type="text/javascript" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
 </head>
 <body>
-    this is video page.
+    <div id="video">
+        rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov
+        <!--<object type='application/x-vlc-plugin' id='vlc' events='True' width="720" height="540" pluginspage="http://www.videolan.org" codebase="http://downloads.videolan.org/pub/videolan/vlc-webplugins/2.0.6/npapi-vlc-2.0.6.tar.xz">
+            <param name='mrl' v-model="msg"/>
+            <param name='volume' value='50' />
+            <param name='autoplay' value='true' />
+            <param name='loop' value='false' />
+            <param name='fullscreen' value='false' />
+            <param name="controls" value="false"/>
+        </object>-->
+        <video src="http://127.0.0.1:8082/dh" width="320" height="240" controls="controls" autoplay="autoplay">
+            your browser does not support the video tag
+        </video>
+    </div>
+    <!--<video id="test_video" src="test.mp4" width="320" height="240" controls autoplay>-->
+    <!--<source  type="video/mp4">-->
+    <!--</video>-->
+<script type="text/javascript">
+    let vue = new Vue({
+        el: '#video',
+        data() {
+            return {
+                msg: 'Video',
+                id: '${id}',
+                url: 'rtsp://admin:admin123@192.168.1.'
+            }
+        },
+        methods: {
+            indexMethod() {
+
+            }
+        },
+        mounted() {
+            this.indexMethod();
+        }
+    });
+</script>
 </body>
 </html>

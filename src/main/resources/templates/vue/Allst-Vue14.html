@@ -18,7 +18,7 @@
      -->
     <input type="text" :value="msg" style="width: 25%"/>
     <p>-----分割线-----</p>
-    <input type="text" v-model="msg" style="width: 25%"/>
+    <input type="text"  v-model="msg" style="width: 25%"/>
 </div>
 
 <script type="text/javascript">
@@ -28,7 +28,9 @@
             msg: 'v-bind单项绑定/v-model双向绑定'
         },
         methods: {
-
+            showData(msg) {
+                console.log(msg)
+            }
         }
     })
 </script>

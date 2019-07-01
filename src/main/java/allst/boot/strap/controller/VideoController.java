@@ -1,7 +1,10 @@
 package allst.boot.strap.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -19,9 +22,10 @@ public class VideoController {
         return modelAndView;
     }
 
-    @RequestMapping("index")
-    public ModelAndView indexVideo() {
+    @RequestMapping(value = "index/{id}", method = {RequestMethod.GET})
+    public ModelAndView indexVideo(@PathVariable("id") String id, Model model) {
         ModelAndView modelAndView = new ModelAndView();
+        model.addAttribute("id", id);
         modelAndView.setViewName("video/index");
         return modelAndView;
     }
