@@ -185,4 +185,13 @@ public class AllstVueController {
     public String allstVue27() {
         return "vue/Allst-Vue27";
     }
+
+    /**
+     * Vue 组件的开发
+     * @return
+     */
+    @GetMapping("/vue28")
+    public String allstVue28() {
+        return "vue/Allst-Vue28";
+    }
 }

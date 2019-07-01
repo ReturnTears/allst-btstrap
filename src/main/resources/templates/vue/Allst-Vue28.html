@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <my-com1>组件ONE</my-com1>
+        <mycom1-2>组件ONE-ONE</mycom1-2>
+        <p>{{ msg2 }}</p>
+        <mycom2>组件TWO</mycom2>
+        <p>{{ msg3 }}</p>
+        <mycom3></mycom3>
+    </div>
+
+<template id="temp3">
+    <div>
+        <h3>这是通过template元素在外部定义的组件结构， 这种方式有代码的只能提示和高亮</h3>
+        <h4>扩展性更好，方便</h4>
+    </div>
+</template>
+
+<script>
+    // 组件的创建方式1
+    // 使用Vue.extend来创建全局的Vue组件
+    let componentOne = Vue.extend({
+        // 通过template属性指定了组件要展示的HTML结构
+        template: '<h3>这里是使用Vue.extend创建的组件1</h3>'
+    });
+    // 使用Vue.component('组件的名称',创建出来的组件模板), 如果名称用驼峰命名，则引入组件时就采用小写+横线的方式; 如果名称全小写，引入组件时同名称一致即可
+    Vue.component('myCom1', componentOne);
+
+    // 组件的创建方式1合并如下
+    Vue.component('mycom1-2', Vue.extend({
+        template: '<h3>这里是使用Vue.extend创建的组件1-2</h3>'
+    }));
+
+    // 创建组件的方式2
+    Vue.component('mycom2', {
+        // 注意: 不论是那种方式创建出来的组件，组件的template属性指向的模板内容，必须有且只有一个根元素
+        template: '<div><h3>这里是直接使用Vue.component创建的组件2</h3><span>组件2内容</span></div>'
+    });
+
+    // 创建组件的方式3
+    Vue.component('mycom3', {
+        // 在被控制的#app外面使用template元素定义HTML模板结构
+        template: '#temp3'
+    });
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Vue创建组件的方式1',
+            msg2: 'Vue创建组件的方式2',
+            msg3: 'Vue创建组件的方式3'
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>
