@@ -52,6 +52,11 @@ public class CssDemoController {
 
     @GetMapping("/nav")
     public String cssNav() {
-        return "bootstrap/CSSqNav";
+        return "bootstrap/CSSNav";
+    }
+
+    @GetMapping("/select2")
+    public String cssBootstrapSelect2() {
+        return "bootstrap/bootstrapSelect2";
     }
 }

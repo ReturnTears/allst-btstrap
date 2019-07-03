@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BootStrap Select2</title>
+    <script src="../../static/asserts/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/asserts/js/bootstrap.min.js"></script>
+    <script src="../../static/asserts/js/bootstrap-treeview.min.js"></script>
+    <link rel="stylesheet" href="../../static/asserts/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/asserts/css/bootstrap-treeview.min.css">
+</head>
+<body>
+   <div class="container">
+       <h1>Bootstrap tree View - DOM Tree</h1>
+       <div class="row">
+           <div class="col-sm-12">
+               <label for="treeview"></label>
+               <div id="treeviews"></div>
+           </div>
+       </div>
+       <div class="ol-sm-6">
+           <div class="input-group">
+               <span class="input-group-addon">所属部门</span>
+               <input type="text" id="depName" name="depName" class="form-control" value=""  onclick="$('#treeview').show()" >
+               <input type="hidden" id="deptId" name="deptId" value="36">
+           </div>
+           <div id="treeview" style="display:none;"/>
+       </div>
+
+   </div>
+
+
+<script type="text/javascript">
+    function buildDomTree() {
+        let data = [];
+        function walk(nodes, data) {
+            if (!nodes) { return; }
+            $.each(nodes, function (id, node) {
+                let obj = {
+                    id: id,
+                    text: node.nodeName + " T_T " + (node.innerText ? node.innerText : ''),
+                    tags: [node.childElementCount > 0 ? node.childElementCount + ' child elements' : '']
+                };
+                if (node.childElementCount > 0) {
+                    obj.nodes = [];
+                    walk(node.children, obj.nodes);
+                }
+                data.push(obj);
+            });
+        }
+        walk($('html')[0].children, data);
+        return data;
+    }
+
+    $(function() {
+
+        var options = {
+            bootstrap2: false,
+            showTags: true,
+            levels: 5,
+            showCheckbox:true,
+            checkedIcon:"glyphicon glyphicon-check",
+            data: buildDomTree(),
+            onNodeSelected:function(event, data){
+                $("#depName").val(data.text);
+                $("#treeview").hide();
+            }
+        };
+
+        $('#treeview').treeview(options);
+    });
+</script>
+</body>
+</html>
