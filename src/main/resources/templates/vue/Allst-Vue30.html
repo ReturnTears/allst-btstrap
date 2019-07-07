@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>组件中的data和methods</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+    <div id="app">
+        <comp1></comp1>
+        <comp2></comp2>
+        <hr/>
+        <comp2></comp2>
+    </div>
+
+
+    <template id="temp2">
+        <div>
+            <input type="button" value="+1" @click="plus">
+            <h3>{{ count }}</h3>
+        </div>
+    </template>
+<script>
+
+    const dataParams = { count: 0 };
+
+    // 组件可以有自己的data数据， 组件的data和实例的data不一致，必须为一个方法， 且需要返回一个对象
+    Vue.component('comp1', {
+        template: '<h3>this is a {{msg1}} defined compnent</h3>',
+        data: function () {
+            return {
+                msg1: 'mySelf'
+            }
+        }
+    });
+    // 定义一个计数器组件
+    Vue.component('comp2', {
+        template: '#temp2',
+        data: function () {
+            // 引用的是全局的对象，该对象是全局共享的
+            // return dataParams
+            // 定义局部的变量，不共享，每次引用该组件都会重新生成
+            return { count: 0 }
+
+        },
+        methods: {
+            plus() {
+                this.count++
+            }
+        }
+    });
+    let vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>

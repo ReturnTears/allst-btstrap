@@ -194,4 +194,40 @@ public class AllstVueController {
     public String allstVue28() {
         return "vue/Allst-Vue28";
     }
+
+    /**
+     * 使用components定义私有组件
+     * @return
+     */
+    @GetMapping("/vue29")
+    public String allstVue29() {
+        return "vue/Allst-Vue29";
+    }
+
+    /**
+     * 组件中的data和methods
+     * @return
+     */
+    @GetMapping("/vue30")
+    public String allstVue30() {
+        return "vue/Allst-Vue30";
+    }
+
+    /**
+     * 组件案例, 登陆与注册
+     * @return
+     */
+    @GetMapping("/vue31")
+    public String allstVue31() {
+        return "vue/Allst-Vue31";
+    }
+
+    /**
+     * 父子组件传值
+     * @return
+     */
+    @GetMapping("/vue32")
+    public String allstVue32() {
+        return "vue/Allst-Vue32";
+    }
 }

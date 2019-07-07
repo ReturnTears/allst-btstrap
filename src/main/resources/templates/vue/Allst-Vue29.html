@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <script th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg }}</p>
+        <mycom3>{{ msg3 }}</mycom3>
+
+    </div>
+
+    <div id="temp">
+        <p>{{ msg2 }}</p>
+        <mycom3></mycom3>
+        <login></login>
+    </div>
+
+<template id="temp3">
+    <div>
+        <h3>这是通过template元素在外部定义的组件结构， 这种方式有代码的只能提示和高亮</h3>
+        <h4>扩展性更好，方便</h4>
+    </div>
+</template>
+<template id="tempPri">
+    <p>this is private component template</p>
+</template>
+<script>
+    // 创建组件的方式3, 定义全局的组件
+    Vue.component('mycom3', {
+        // 在被控制的#app外面使用template元素定义HTML模板结构
+        template: '#temp3'
+    });
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '使用components定义私有组件',
+            msg3: '创建组件的方式3'
+        },
+        methods: {
+
+        }
+    });
+
+    const vm2 = new Vue({
+        el: '#temp',
+        data: {
+            msg2: 'this is component two'
+        },
+        methods: {},
+        filters: {},
+        directives: {},
+        // 定义实例内部私有组件
+        components: {
+            login: {
+                // template: '<span>this is login private component</span>'
+                template: '#tempPri'
+            }
+        },
+
+        // 生命周期函数(钩子函数)
+        beforeCreate() {},
+        create() {},
+        beforeMount() {},
+        mounted() {},
+        beforeUpdate() {},
+        updated() {},
+        beforeDestroy() {}
+    })
+</script>
+</body>
+</html>

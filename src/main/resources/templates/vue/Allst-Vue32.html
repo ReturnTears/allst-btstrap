@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue父子组件传值</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="加入购物车" @click="flag=!flag">
+        <transition
+                @before-enter="beforeEnter"
+                @enter="enter"
+                @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+    </div>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '',
+            flag: false
+        },
+        methods: {
+            beforeEnter(el) {
+                el.style.transform = 'translate(0, 0)'
+            },
+            enter(el, done) {
+                el.offsetWidth;
+                el.style.transform = 'translate(150px, 450px)';
+                el.style.transition = 'all 1s ease'
+                done()
+            },
+            afterEnter(el) {
+                // 这句话第一个功能是控制小球的显示与隐藏,第二个功能直接跳过后半场动画,让flag标识符直接变为false
+                this.flag = !this.flag;
+                // Vue把一个完整的动画使用钩子函数拆分为了两部分: 我们使用flag标识符，来表示动画的切换,
+                // 刚开始，flag = false -> true -> false
+                el.style.opacity = 0;
+            }
+        }
+    })
+</script>
+</body>
+</html>

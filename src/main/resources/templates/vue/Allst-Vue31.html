@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>组件案例</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <style>
+        .v-enter, .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+        .v-enter-active, .v-leave-active {
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <a href="" @click.prevent="flag=true">登陆方式1</a>
+        <a href="" @click.prevent="flag=false">注册方式1</a>
+        <!-- 该方式的缺陷是只能符合两个标签，如果多个标签不方便切换 -->
+        <login v-if="flag"></login>
+        <register v-else="flag"></register>
+        <hr>
+        <a href="" @click.prevent="compName='login'">登陆方式2</a>
+        <a href="" @click.prevent="compName='register'">注册方式2</a>
+        <!-- Vue提供了component,来展示对应名称的组件,component是占位符,is属性可以指定要展示的组件名称 -->
+        <transition mode="out-in">
+            <component :is="compName"></component>
+        </transition>
+    </div>
+
+<script>
+    //import {VueConstructor as Vue} from "./vue";
+
+    // 定义登陆组件
+
+    Vue.component('login', {
+        template: '<h3>登陆组件</h3>'
+    });
+    // 定义注册组件
+    Vue.component('register', {
+        template: '<h3>注册组件</h3>'
+    });
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true,
+            compName: 'login'
+        },
+        methods: {}
+    });
+
+</script>
+</body>
+</html>
