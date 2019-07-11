@@ -230,4 +230,49 @@ public class AllstVueController {
     public String allstVue32() {
         return "vue/Allst-Vue32";
     }
+
+    /**
+     * 父组件向子组件传值
+     * @return
+     */
+    @GetMapping("/vue33")
+    public String allstVue33() {
+        return "vue/Allst-Vue33";
+    }
+
+    /**
+     * 父组件把方法传递给子组件
+     * @return
+     */
+    @GetMapping("/vue34")
+    public String allstVue34() {
+        return "vue/Allst-Vue34";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/vue35")
+    public String allstVue35() {
+        return "vue/Allst-Vue35";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/vue36")
+    public String allstVue36() {
+        return "vue/Allst-Vue36";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/vue37")
+    public String allstVue37() {
+        return "vue/Allst-Vue37";
+    }
 }

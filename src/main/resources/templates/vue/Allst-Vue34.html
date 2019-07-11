@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件把方法传递给子组件</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传递方法，使用的是事件绑定机制，v-on/@ 当我们自定义了一个事件属性func之后（事件属性可以随便自定义, 与methods中的emit方法的值绑定一致即可），
+            那么子组件就能够通过某些方式来调用传递进去的方法 -->
+        <comp @func="show"></comp>
+    </div>
+    <template id="temp1">
+        <div>
+            <h1>this is a child Component!</h1>
+            <input @click="myClick" type="button" value="这是子组件中的按钮，点击它来触发父组件传递过来的func方法">
+        </div>
+    </template>
+<script>
+    // 定义字面量类型的组件模板对象
+    let comp = {
+        template: '#temp1',
+        data() {
+          return {
+              sth: {name: 'Yangyang', msg: '我爱你'}
+            }
+        },
+        methods: {
+            myClick() {
+                // emit:是触发调用发射的意思, 第二个参数代表传参
+                this.$emit('func', this.sth);
+            }
+        }
+    };
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Vue父组件把方法传递给子组件',
+            dataMsg: null
+        },
+        methods: {
+            show(data) {
+                //console.log("this is parent method " + data);
+                //console.log(data);
+                this.dataMsg = data;
+                console.log(this.dataMsg);
+            }
+        },
+        components: {
+            comp
+        }
+    })
+</script>
+</body>
+</html>

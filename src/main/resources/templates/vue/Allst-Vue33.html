@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件向传子组件传值</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件可以在引用子组件的时候可以通过属性绑定(v-bind:)的形式，把需要传递给子组件的数据,
+            以属性绑定的形式，传递到子组件内部，供子组件使用
+         -->
+        <comp1 v-bind:parentmsg="msg"></comp1>
+    </div>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Vue父组件向传子组件传值'
+        },
+        methods: {
+
+        },
+        // 定义组件
+        components: {
+            // 子组件中默认无法访问父组件中data上的数据
+            comp1: {
+                // 子组件中的data数据是子组件私有的，不是父组件传递的， 例如：像Ajax传递的数据就可以放在这
+                data() {
+                    return {
+                        title: 'child Comp',
+                        content: 'this is content'
+                    }
+                },
+                template: '<h2 @click="change">{{content}} >> This is a child Component, This msg is {{parentmsg}}</h2>',
+                // 把父组件传递过来的parentmsg属性，先在props数组中定义一下， 这样才能使用这个数据，
+                // 组件中的所有props中的数据，都是通过父组件传递给子组件的, 是只读的
+                props: ['parentmsg'],
+                methods: {
+                    change() {
+                        this.content = 'this is updated content'
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
