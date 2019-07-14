@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>案例</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <link rel="stylesheet"  th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <cmt-box @func="loadComments"></cmt-box>
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人 : {{ item.user }}</span>
+                {{ item.content }}
+            </li>
+        </ul>
+    </div>
+
+    <template id="tmp1">
+        <div>
+            <div class="form-group">
+                <label>评论人 : </label>
+                <input type="text" class="form-group" v-model="user">
+            </div>
+            <div class="form-group">
+                <label>评论内容 : </label>
+                <textarea class="form-group" v-model="content"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="button" value="发表评论" class="btn btn-primary" @click="postComment">
+            </div>
+        </div>
+    </template>
+<script>
+    // 创建子组件
+    let commentBox = {
+        template: "#tmp1",
+        data() {
+            return {
+                user: '',
+                content: ''
+            }
+        },
+        methods: {
+            /**
+             * 分析业务逻辑:
+             *  1、评论数据存放到那里去？ 存放在localStorage
+             *  2、先组织出一个最新的评论数据对象
+             *  3、想办法把第二步中得到的评论对象保存到localStorage中
+             *  3.1、只支持存放字符串数据，要先调用JSON.stringify
+             *  3.2、在保存最新评论数据之前，要先从localStorage获取到之前的评论数据(string)转换为一个数组对象，然后把最新的评论push到这个数组
+             *  3.3、如果获取到的localStorage中的评论字符串为空不存在，则可以返回'[]',让JSON.parse去转换
+             *  3.4、把最新的评论列表数组再次调用JSON.stringify转为数组字符串，然会调用localStorage.setItem()
+             */
+            postComment() {
+                let comment = {id: Date.now(), user: this.user, content: this.content}
+                // 从locaStorage获取所有的评论
+                let list = JSON.parse(localStorage.getItem('cmts') || '[]');
+                list.unshift(comment);
+                localStorage.setItem('cmts', JSON.stringify(list));
+                this.user = this.content = '';
+                this.$emit('func')
+            }
+        }
+    };
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '',
+            list: [
+                {id: Date.now(), user: '李白', content: '天生我才必有用'},
+                {id: Date.now(), user: '杜甫', content: '劝君更尽一杯酒'},
+                {id: Date.now(), user: '苏轼', content: '十年生死两茫茫'}
+            ]
+
+        },
+        methods: {
+            // 从本地的localStorage中加载评论列表
+            loadComments() {
+                let list = JSON.parse(localStorage.getItem('cmts') || '[]');
+                this.list = list;
+            }
+        },
+        components: {
+            'cmt-box': commentBox
+        },
+        created() {
+            this.loadComments();
+        }
+    })
+</script>
+</body>
+</html>
