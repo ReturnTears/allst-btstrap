@@ -143,6 +143,14 @@
 			<version>2.6.9</version>
 		</dependency>
 
+        <!-- vue-router -->
+        <!-- https://mvnrepository.com/artifact/org.webjars.npm/vue-router -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>vue-router</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
 		<!-- vue-resource -->
 		<dependency>
 			<groupId>org.webjars.bower</groupId>

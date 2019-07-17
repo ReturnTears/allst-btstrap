@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>元素的引用</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="获取元素" @click="getEle" ref="mybtn">
+        <h3 ref="myh3">{{ msg }}</h3>
+        <hr>
+        <login ref="mylog"></login>
+    </div>
+<script>
+    // 定义登陆组件
+    let login = {
+        template: '<h1>登陆组件</h1>',
+        data() {
+            return {
+                msg: 'son msg'
+            }
+        },
+        methods: {
+            show() {
+                console.log('调用了子组件的方法')
+            }
+        }
+    };
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '哈哈哈, 今天天气很好'
+        },
+        methods: {
+            getEle() {
+                // ref是英文单词【reference】 值类型和引用类型 referenceError
+                console.log(this.$refs.myh3.innerText);
+                console.log(this.$refs.mylog.msg);
+                this.$refs.mylog.show()
+            }
+        },
+        components: {
+            login
+        }
+    })
+</script>
+</body>
+</html>

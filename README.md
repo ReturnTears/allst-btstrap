@@ -748,6 +748,17 @@ Vue.elementDirective('red-color', {
 <red-color>1232</red-color>
 ```
 
+## 路由
+```
+什么是路由:
+    后端路由: 对于普通的网站，所有的超链接都是URL地址，所有的URL地址都对应服务器上的对应的资源
+    前端路由: 对于单页面应用程序来说，主要通过URL的hash(#)来实现不同页面之间的切换，同时，hash有一个特点;HTTP请求不会包含hash相关的内容
+            所以，单页面程序中页面跳转主要用hash实现
+在单页面应用程序中，这种通过hash改变切换页面的方式，称作前端路由(区别于后端路由)
+    
+
+```
+
 ## 相关文章
 1. [vue.js 1.x 文档](https://v1-cn.vuejs.org/)
 2. [vue.js 2.x 文档](https://cn.vuejs.org/)

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue路由</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <!-- 导入vue-router模块,需要先导入vue模块 -->
+    <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3>{{ msg }}</h3>
+        <a href="#/login">登陆</a>
+        <a href="#/register">注册</a>
+        <!-- router-link默认渲染为a标签 -->
+        <router-link to="/login" tag="span">Link登陆</router-link>
+        <router-link to="/register">Link注册</router-link>
+        <!-- router-view是vue-router提供的元素， 专门用来当作占位符的,将来路由规则匹配到的组件就会展示到这个router-view中去 -->
+        <router-view></router-view>
+    </div>
+<script>
+    // 组件的模板对象  (注意: 该值一定要放在引用该对象的前面,否则会报错引用对象undefind)
+    let login = {
+        template: '<h3>登陆组件</h3>'
+    };
+    let register = {
+        template: '<h3>注册组件</h3>'
+    };
+    // 创建路由对象,当导入vue-router.js这个包之后,在全局的Windows对象中就有了一个路由的构造函数VueRouter
+    // 在创建路由对象时， 可以为构造函数传递一个配置对象
+    let routerObj = new VueRouter({
+        // 对象中的route表示[路由匹配规则], 每个路由规则都是一个对象， 这个规则对象身上有两个必须的属性
+        // 属性1是path, 表示监听那个路由连接地址
+        // 属性2是component, 表示如果路由是前面匹配的path，则展示component属性对应的组件, component的属性值必须是一个模板属性对象
+        routes: [
+            {path: '/login', component: login},
+            {path: '/register', component: register}
+        ]
+    });
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '哈哈哈, 路由来了'
+        },
+        methods: {
+
+        },
+        // 将路由规则对象注册到实例上, 用来监听URL地址的变化, 然后展示对应的组件
+        router: routerObj
+    })
+</script>
+</body>
+</html>
