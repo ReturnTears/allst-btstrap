@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue路由的嵌套</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <!-- 导入vue-router模块,需要先导入vue模块 -->
+    <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3>{{ msg }}</h3>
+        <router-link to="/account">ACCOUNT</router-link>
+        <router-view></router-view>
+    </div>
+
+    <!-- 自定义组件模板 -->
+    <template id="tmp">
+        <div>
+            <h3>这是定义ACCOUNT组件模板</h3>
+            <!-- 如果在路由中使用查询字符串给路由传递参数，则不需要修改路由规则的path属性 -->
+            <router-link to="/account/login">LOGIN</router-link>
+            <router-link to="/account/regit">REGIT</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+<script>
+    // 组件的模板对象
+    let account = {
+        template: '#tmp'
+    };
+
+    // 自定义两个组件
+    let login = {
+        template: '<h3>LOGIN组件</h3>',
+        created() {
+            // 同$.refs
+            //console.log(this.$route.query.id);
+        }
+    };
+
+    let regit = {
+        template: '<h3>REGISTER组件</h3>'
+    };
+
+    // 路由组件
+    let router = new VueRouter({
+        routes: [
+            // 这里的redirect和Node中的不一样
+            {
+                path: '/account',
+                component: account,
+                // 使用children属性实现子路由, 子路由的path属性前面不要带/, 否则永远以根路径开头请求
+                children: [
+                    {path: 'login', component: login},
+                    {path: 'regit', component: regit}
+                ]
+            }
+        ]
+    });
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '哈哈哈, 路由规则中定义参数来了'
+        },
+        methods: {
+
+        },
+        // 将路由规则对象注册到实例上, 用来监听URL地址的变化, 然后展示对应的组件
+        router
+    })
+</script>
+</body>
+</html>

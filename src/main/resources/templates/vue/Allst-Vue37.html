@@ -7,7 +7,23 @@
     <!-- 导入vue-router模块,需要先导入vue模块 -->
     <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
     <style>
-
+        /*实现路由高亮: 原生样式 / 自定义*/
+        .router-link-active, .myActive {
+            color: red;
+            font-weight: 100;
+            font-style: italic;
+            font-size: 40px;
+            text-decoration: underline;
+            background-color: darkorange;
+        }
+        /*添加动画*/
+        .v-enter, .v-leave-to {
+            opacity: 0;
+            transform: translateX(222px);
+        }
+        .v-enter-active, .v-leave-active {
+            transition: all 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -19,7 +35,10 @@
         <router-link to="/login" tag="span">Link登陆</router-link>
         <router-link to="/register">Link注册</router-link>
         <!-- router-view是vue-router提供的元素， 专门用来当作占位符的,将来路由规则匹配到的组件就会展示到这个router-view中去 -->
-        <router-view></router-view>
+        <!-- 添加动画 -->
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 <script>
     // 组件的模板对象  (注意: 该值一定要放在引用该对象的前面,否则会报错引用对象undefind)
@@ -36,9 +55,11 @@
         // 属性1是path, 表示监听那个路由连接地址
         // 属性2是component, 表示如果路由是前面匹配的path，则展示component属性对应的组件, component的属性值必须是一个模板属性对象
         routes: [
+            {path: '/', redirect: '/login'},        // 这里的redirect和Node中的不一样
             {path: '/login', component: login},
             {path: '/register', component: register}
-        ]
+        ],
+        linkActiveClass: 'myActive'
     });
 
     // 创建Vue实例，得到ViewModel

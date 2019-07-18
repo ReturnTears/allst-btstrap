@@ -268,11 +268,29 @@ public class AllstVueController {
     }
 
     /**
-     *
+     * 路由匹配
      * @return
      */
     @GetMapping("/vue37")
     public String allstVue37() {
         return "vue/Allst-Vue37";
+    }
+
+    /**
+     * 路由规则中定义参数
+     * @return
+     */
+    @GetMapping("/vue38")
+    public String allstVue38() {
+        return "vue/Allst-Vue38";
+    }
+
+    /**
+     * 路由的嵌套
+     * @return
+     */
+    @GetMapping("/vue39")
+    public String allstVue39() {
+        return "vue/Allst-Vue39";
     }
 }
