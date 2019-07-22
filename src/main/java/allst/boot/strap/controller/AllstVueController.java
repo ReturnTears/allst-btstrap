@@ -293,4 +293,22 @@ public class AllstVueController {
     public String allstVue39() {
         return "vue/Allst-Vue39";
     }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/vue40")
+    public String allstVue40() {
+        return "vue/Allst-Vue40";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/vue41")
+    public String allstVue41() {
+        return "vue/Allst-Vue41";
+    }
 }
