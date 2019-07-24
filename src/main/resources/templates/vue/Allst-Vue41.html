@@ -3,23 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Vue路由的嵌套</title>
-    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
     <!-- 导入vue-router模块,需要先导入vue模块 -->
     <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
 </head>
 <body>
     <div id="app">
-        <h3>{{ msg }}</h3>
+        <!-- 父组件向子组件传值:通过属性传递 -->
+        <comp1 :parentMsg="msg" @func="getChildMsg"></comp1>
     </div>
+
+    <template id="tmp1">
+        <div>
+            <h3>this is a child component -- {{ parentMsg }}</h3>
+            <input type="button" value="子向父传值" @click="sendMsg">
+        </div>
+    </template>
 <script>
+    // 创建子组件
+    let comp1 = {
+        template: '#tmp1',
+        data() {
+          return {
+              msg: 'this is child msg'
+          }
+        },
+        methods: {
+            sendMsg() {
+                this.$emit('func', this.msg)
+            }
+        },
+        props: ['parentMsg']
+    };
+
     // 创建Vue实例，得到ViewModel
     let vm = new Vue({
         el: '#app',
         data: {
-            msg: '哈哈哈, 路由规则中定义参数来了'
+            msg: 'this is parent msg',
+            msgFromChild: ''
         },
         methods: {
-
+            getChildMsg(data) {
+                this.msgFromChild = data;
+                console.log(this.msgFromChild);
+            }
+        },
+        components: {
+            comp1
         }
     })
 </script>

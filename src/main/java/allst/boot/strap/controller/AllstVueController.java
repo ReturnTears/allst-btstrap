@@ -295,7 +295,7 @@ public class AllstVueController {
     }
 
     /**
-     *
+     * 路由-命名视图实现经典布局
      * @return
      */
     @GetMapping("/vue40")

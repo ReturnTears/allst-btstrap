@@ -6,22 +6,81 @@
     <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.min.js}"></script>
     <!-- 导入vue-router模块,需要先导入vue模块 -->
     <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: red;
+            height: 80px;
+        }
+        h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 17px;
+        }
+        .container {
+            display: flex;
+        }
+        .left {
+            background-color: #2fa8ec;
+            flex: 2;
+            height: 600px;
+        }
+        .main {
+            background-color: #64448f;
+            flex: 8;
+            height: 600px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <h3>{{ msg }}</h3>
+        <router-view></router-view>
+        <div class="container">
+            <router-view name="left"></router-view>
+            <router-view name="main"></router-view>
+        </div>
     </div>
 
 <script>
+    let header = {
+        template: '<h1 class="header">Header头部区域</h1>'
+    };
+    let leftBox = {
+        template: '<h1 class="left">Left侧边栏区域</h1>'
+    };
+    let mainBox = {
+        template: '<h1 class="main">main主体区域</h1>'
+    };
+
+    // 创建路由对象
+    let router = new VueRouter({
+        routes: [
+            /*{path: '/', component: header},
+            {path: '/left', component: leftBox},
+            {path: '/main', component: mainBox}*/
+            {path: '/', components: {
+                'default': header,
+                    'left': leftBox,
+                    'main': mainBox
+                }
+            }
+        ]
+    });
+
     // 创建Vue实例，得到ViewModel
     let vm = new Vue({
         el: '#app',
         data: {
-            msg: '哈哈哈, 路由规则中定义参数来了'
+            msg: '命名视图实现经典布局'
         },
         methods: {
 
-        }
+        },
+        router
     })
 </script>
 </body>
