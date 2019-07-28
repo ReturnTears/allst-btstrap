@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue路由</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!-- 导入vue-router模块,需要先导入vue模块 -->
+    <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/login">登陆</router-link>
+        <router-link to="/regst">注册</router-link>
+
+        <!-- 容器 -->
+        <router-view></router-view>
+    </div>
+<script>
+    let login = {
+        template: '<h3>this is login child component</h3>'
+    };
+    let register = {
+        template: '<h3>this is register child component</h3>'
+    };
+    let router = new VueRouter({
+        routes: [
+            {path: '/', redirect: '/login'},
+            {path: '/login', component: login},
+            {path: '/regst', component: register},
+        ],
+        // 激活相关的类
+        linkActiveClass: 'myactive'
+    });
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'this is parent msg',
+            msgFromChild: ''
+        },
+        methods: {
+
+        },
+        router,
+        // watch属性可以监听data属性中的数据变化, 也可以监听路由的变化
+        watch: {
+            '$route.path': function (newVal, oldVal) {
+                //console.log(newVal + '-' + oldVal)
+                if (newVal === '/login') {
+                    console.log('welcome in login page')
+                } else if (newVal === '/regst') {
+                    console.log('welcome in register page')
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

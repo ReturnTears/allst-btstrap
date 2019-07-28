@@ -304,11 +304,29 @@ public class AllstVueController {
     }
 
     /**
-     *
+     * 路由嵌套复习
      * @return
      */
     @GetMapping("/vue41")
     public String allstVue41() {
         return "vue/Allst-Vue41";
+    }
+
+    /**
+     * 路由
+     * @return
+     */
+    @GetMapping("/vue42")
+    public String allstVue42() {
+        return "vue/Allst-Vue42";
+    }
+
+    /**
+     * 案例
+     * @return
+     */
+    @GetMapping("/vue43")
+    public String allstVue43() {
+        return "vue/Allst-Vue43";
     }
 }

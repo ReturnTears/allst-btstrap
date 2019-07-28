@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue名称案例</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!-- 导入vue-router模块,需要先导入vue模块 -->
+    <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+</head>
+<body>
+    <div id="app">
+        <!--    方式一
+            监听文本框的数据改变: 键盘的keyup事件, 或者onchange事件
+         -->
+        <span>方式一:</span>
+        <input type="text" v-model="firstname" @keyup="getFullName">
+        +
+        <input type="text" v-model="lastname" @keyup="getFullName">
+        =
+        <input type="text" v-model="fullname">
+
+
+        <br/>
+        <br/>
+        <!--    方式二
+             watch属性的监听
+         -->
+        <span>方式二:</span>
+        <input type="text" v-model="firstname" >
+        +
+        <input type="text" v-model="lastname" >
+        =
+        <input type="text" v-model="fullname">
+
+
+        <br/>
+        <br/>
+        <!--     方式三
+             computed
+         -->
+        <span>方式三:</span>
+        <input type="text" v-model="firstname" >
+        +
+        <input type="text" v-model="middlename" >
+        +
+        <input type="text" v-model="lastname" >
+        =
+        <input type="text" v-model="allname" readonly>
+
+        <div>
+            <span>{{ allname }}</span>
+            <br>
+            <span>调用了计算属性方法: {{num}} 次</span>
+        </div>
+    </div>
+<script>
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            num: 0,
+            firstname: '',
+            middlename: '',
+            lastname: '',
+            fullname: '',
+        },
+        methods: {
+            getFullName() {
+                this.fullname = this.firstname + '-' + this.lastname;
+            }
+        },
+        // 这个属性可以监视data中指定数据的变化,然后再触发此watch中对应的function处理函数
+        watch: {
+            'firstname': function () {
+                //console.log('监视到了firstname的变化')
+                this.fullname = this.firstname + '-' + this.lastname;
+            },
+            'lastname': function (newVal, oldVal) {
+                this.fullname = this.firstname + '-' + newVal
+            }
+        },
+        // 可以在computed中定义一些属性, 这些属性叫做计算属性, 其本质就是一个方法,只不过在使用时就是把它们的名称当作属性来使用,并不会把计算属性当作方法调用
+        // 计算属性在调用的时候不要加(),直接把它当作普通属性即可
+        // 只要计算属性这个function内部所用到的任何data中的属性发生变化,就会重新计算属性的值
+        // 计算属性的求职结果会被缓存起来,如果所涉及到的属性没有任何变化,则不会重新计算
+        computed: {
+            'allname': function () {
+                this.num++;
+                return this.firstname + '_' + this.middlename + '-' + this.lastname;
+            }
+        }
+    })
+</script>
+</body>
+</html>
