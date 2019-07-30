@@ -5,10 +5,23 @@
     /*margin: 4px 7px;*/
     margin-bottom: 10px;
     padding-left: 10px;
+    /**/
+    background-color: #adadad;
+    float: left;
 }
 .box2 {
     width: 100px;
     height: 150px;
     border: 1px solid green;
     padding-top: 10px;
+    /**/
+    background-color: #c9e2b3;
+    float: left;
+}
+.box3 {
+    width: 500px;
+    height: 200px;
+    border: 1px solid yellow;
+    background-color: #df6659;
+    clear: left;
 }
