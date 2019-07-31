@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <title>site</title>
     <link rel="stylesheet" href="../../static/asserts/css/h5site.css" type="text/css">
+    <script type="text/javascript" src="../../static/asserts/js/h5site.js"></script>
 </head>
-<body>
 
+<body>
+    <div class="top">
+        <div class="top_content">
+            <ul>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#" onclick="addFav(window.location, document.title)">加入收藏</a></li>
+                <li><a href="#" onclick="SetHome(window.location)">设为首页</a> </li>
+            </ul>
+        </div>
+    </div><!--top结束-->
+
+    <div class="wrap">
+        <div class="logo">
+            <div class="log_left">
+                <img src="../../resource/images/D-logo.png" alt="LOGO Left" />
+            </div>
+            <div class="log_right">
+                <img src="../../resource/images/hotline.png" alt="Hot Line" />24小时服务热线:<span class="tel">123-456-7890</span>
+            </div>
+        </div><!--logo结束-->
+    </div><!--wrap结束-->
 </body>
+
 </html>

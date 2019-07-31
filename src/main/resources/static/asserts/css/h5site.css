@@ -1,11 +1,64 @@
 @charset "UTF-8";
 /*CSS Document*/
 
+/*清除元素默认属性*/
 * {
     margin: 0;
     padding: 0;
-    font-size: 12px;
+    font-size: 17px;
 }
 body {
-    background-color: #df6659;
+    background-color: #DDF0ED;
+}
+.top {
+    width: 100%;
+    height: 27px;
+    background: url("../../../resource/images/top_icon.png") repeat-x;
+}
+.top_content {
+    width: 1000px;
+    margin: 0 auto;
+}
+.top_content li {
+    list-style-image: url("../../../resource/images/right.png");
+    float: right;
+    width: 100px;
+    line-height: 27px;
+}
+.top_content a:link, .top_content a:visited {
+    color: grey;
+    text-decoration: none;  /*下划线不要*/
+}
+.top_content a:hover, .top_content a:active {
+    color: red;
+    text-decoration: none;
+}
+
+.wrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+.logo {
+    height: 80px;
+    background-color: white;
+}
+.log_left {
+    width: 200px;
+    float: left;
+}
+.log_right {
+    width: 300px;
+    float: right;
+    height: 28px;
+    margin-top: 30px;
+    color: #8e8e8e;
+}
+.log_right img {
+    vertical-align: text-top;
+    margin-right: 10px;
+}
+.tel {
+    font-family: "微软雅黑 Light";
+    font-size: 17px;
+    color: #df6659;
 }
