@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>site</title>
-    <!--<link rel="stylesheet" href="../../static/asserts/css/h5site.css" type="text/css">
-    <script type="text/javascript" src="../../static/asserts/js/h5site.js"></script>-->
-    <link rel="stylesheet" th:href="@{/asserts/css/h5site.css}">
-    <script type="text/javascript" th:src="@{/asserts/js/h5site.js}"></script>
-    <style>
+    <link rel="stylesheet" href="../../static/asserts/css/h5site.css" type="text/css">
+    <script type="text/javascript" src="../../static/asserts/js/h5site.js"></script>
+    <!--<link rel="stylesheet" th:href="@{/asserts/css/h5site.css}">
+    <script type="text/javascript" th:src="@{/asserts/js/h5site.js}"></script>-->
+   <!-- <style>
         .top {
             background: url("/resource/images/top_icon.png") repeat-x;
         }
         .top_content li {
             list-style-image: url("/resource/images/right.png");
         }
-    </style>
+    </style>-->
 </head>
 
 <body>
@@ -31,12 +31,32 @@
     <div class="wrap">
         <div class="logo">
             <div class="log_left">
-                <img th:src="@{/resource/images/D-logo.png}" alt="LOGO Left" />
+                <img src="../../resource/images/D-logo.png" alt="LOGO Left" />
             </div>
             <div class="log_right">
-                <img th:src="@{/resource/images/hotline.png}" alt="Hot Line" />24小时服务热线:<span class="tel">123-456-7890</span>
+                <img src="../../resource/images/hotline.png" alt="Hot Line" />24小时服务热线:<span class="tel">123-456-7890</span>
             </div>
         </div><!--logo结束-->
+        <div class="nav">
+            <div class="nav_left"></div>
+            <div class="nav_mid">
+                <div class="nav_mid_left">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><a href="list.html">关于公司</a></li>
+                        <li><a href="">最新动态</a></li>
+                        <li><a href="#">课程中心</a></li>
+                        <li><a href="#">人才招聘</a></li>
+                    </ul>
+                </div>
+                <div class="nav_mid_right">
+                    <form action="" method="">
+                        <input type="text" class="search_text">
+                    </form>
+                </div>
+            </div>
+            <div class="nav_right"></div>
+        </div><!--nav结束-->
     </div><!--wrap结束-->
 </body>
 
