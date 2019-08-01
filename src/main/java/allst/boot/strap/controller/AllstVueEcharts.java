@@ -15,4 +15,9 @@ public class AllstVueEcharts {
     public String vuecharts1() {
         return "echarts/Vuecharts1";
     }
+
+    @RequestMapping("/ech")
+    public String echartsPage() {
+        return "echarts/all";
+    }
 }

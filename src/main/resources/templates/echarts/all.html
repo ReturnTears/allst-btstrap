@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图标统计</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script type="text/javascript" th:src="@{/asserts/js/echarts.js}"></script>
+    <script type="text/javascript" th:src="@{/asserts/js/jquery-1.9.1.min.js}"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            width: 100%;
+            height: 50%;
+            margin: 1px;
+        }
+        .area {
+            width: 33%;
+            height: 90%;
+            border: 1px solid red;
+            float: left;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="area" id="daily"></div>
+            <div class="area" id="material"></div>
+            <div class="area" id="person"></div>
+        </div>
+        <div class="container">
+            <div class="area" id="total"></div>
+            <div class="area" id="month"></div>
+            <div class="area" id="day"></div>
+        </div>
+    </div>
+</body>
+<script>
+    (function () {
+        f_total();
+    })();
+
+    // Ajax
+    function GetXhr() {
+        var xhr = null;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xhr;
+    }
+
+    function f_total() {
+        var url = 'http://127.0.0.1:10104/screen/api/screen/screenAllTasksInfo/listTasks';
+        var xhr = GetXhr();
+        xhr.open("get", url, true);
+        xhr.setRequestHeader("If-Modified-Since", "0");
+        // 回调中处理echarts图表
+        console.log('func');
+        xhr.onreadystatechange = function() {
+            console.log('进入到回调方法');
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var resData = xhr.responseText;
+                var totalOption = {
+                    backgroundColor: '#fff',
+                    color: ['#b6a2de', '#58afed'], //环形图每块的颜色
+                    title: {
+                        text: '总任务量',
+                        x: 'center',
+                        y: 'right',
+                        top: 10,
+
+                    },
+                    //backgroundColor: '#87CEFA',
+                    tooltip: {
+                        trigger: 'item',
+                        //position: ['50%', '50%'],
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        show: true,
+                        itemGap: 30,
+                        orient: 'horizontal',
+                        bottom: 20,
+                        data: ['已完成', '未完成'],
+                        textStyle: {
+                            fontStyle: 'normal',
+                            fontSize: '14',//已完成未完成字体
+                            color: '#000'
+                        }
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            name: '总任务量',
+                            radius: ['30%', '45%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    fontSize: '12',//环球形状字体大小
+                                    formatter: '{b}：{c} ({d}%)',
+                                    show: true,
+                                    position: 'outside'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontStyle: 'normal'
+                                    },
+                                    textStyle: {
+                                        fontSize: '12',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: true,
+                                    length: 12
+                                }
+                            },
+                            data: [
+                                {value: resData.tasks.finish, name: '已完成'},
+                                {value: resData.tasks.total - resData.tasks.finish, name: '未完成'}
+                            ]
+                        }
+                    ]
+                };
+
+
+                var total = document.getElementById("total");
+                var totoalEcharts = echarts.init(total);
+                totoalEcharts.setOption(totalOption, true);
+            } else {
+                console.log('Error');
+            }
+        }
+    }
+</script>
+</html>

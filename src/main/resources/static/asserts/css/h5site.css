@@ -13,14 +13,15 @@ body {
 .top {
     width: 100%;
     height: 27px;
-    background: url("../../../resource/images/top_icon.png") repeat-x;
+    /*background: url("../../../resource/images/top_icon.png") repeat-x;*/
+    /*background: url("/resource/images/top_icon.png") repeat-x;*/
 }
 .top_content {
     width: 1000px;
     margin: 0 auto;
 }
 .top_content li {
-    list-style-image: url("../../../resource/images/right.png");
+    /*list-style-image: url("/resource/images/right.png");*/
     float: right;
     width: 100px;
     line-height: 27px;

@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>site</title>
-    <link rel="stylesheet" href="../../static/asserts/css/h5site.css" type="text/css">
-    <script type="text/javascript" src="../../static/asserts/js/h5site.js"></script>
+    <!--<link rel="stylesheet" href="../../static/asserts/css/h5site.css" type="text/css">
+    <script type="text/javascript" src="../../static/asserts/js/h5site.js"></script>-->
+    <link rel="stylesheet" th:href="@{/asserts/css/h5site.css}">
+    <script type="text/javascript" th:src="@{/asserts/js/h5site.js}"></script>
+    <style>
+        .top {
+            background: url("/resource/images/top_icon.png") repeat-x;
+        }
+        .top_content li {
+            list-style-image: url("/resource/images/right.png");
+        }
+    </style>
 </head>
 
 <body>
@@ -21,10 +31,10 @@
     <div class="wrap">
         <div class="logo">
             <div class="log_left">
-                <img src="../../resource/images/D-logo.png" alt="LOGO Left" />
+                <img th:src="@{/resource/images/D-logo.png}" alt="LOGO Left" />
             </div>
             <div class="log_right">
-                <img src="../../resource/images/hotline.png" alt="Hot Line" />24小时服务热线:<span class="tel">123-456-7890</span>
+                <img th:src="@{/resource/images/hotline.png}" alt="Hot Line" />24小时服务热线:<span class="tel">123-456-7890</span>
             </div>
         </div><!--logo结束-->
     </div><!--wrap结束-->
