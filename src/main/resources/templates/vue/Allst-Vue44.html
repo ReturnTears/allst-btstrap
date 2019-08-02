@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue名称案例</title>
+    <script src="/asserts/js/vue.js" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!-- 导入vue-router模块,需要先导入vue模块 -->
+    <script src="/asserts/js/vue-router.js" th:src="@{webjars/vue-router/3.0.7/dist/vue-router.js}"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+<script>
+
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+
+        },
+
+    })
+</script>
+</body>
+</html>

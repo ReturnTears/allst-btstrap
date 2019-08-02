@@ -54,6 +54,16 @@ inherit 规定应该从父元素clear属性的值
 
 
 
+# nrm的使用
+```text
+nrm的作用是,提供了一些最常用的NPM包镜像地址, 能够让我们快速的切换安装包时候的服务器地址.
+什么是镜像? 原来包一开始是只存在于国外的NPM服务器,但是由于网络原因,经常访问不到,这时候需要我们可以在国内,创建一个和官网完全一样的NPM服务器,只不过数据都是从国外拿过来的,使用方式都是一样
+
+安装 npm i nrm -g
+nrm ls
+nrm use npm / cnpm / taobao
+
+```
 
 
 
@@ -61,8 +71,41 @@ inherit 规定应该从父元素clear属性的值
 
 
 
+# Webpack
+```text
+**在网页中会引用那些常见静态资源?**
++ JS
+  - .js .jsx .coffee .ts (TypeScript 类 C# )
++ CSS
+  - .css .less .sass .scss
++ Image
+  - .jpg .png .gif .bmp .svg
++ 字体文件
+  - .svg .ttf .eot .woff .woff2
++ 模板文件
+  .ejs .jade .vue
 
+**在网页中引入的静态资源多了以后有什么问题?**
+-- 网页的加载速度变慢, 因为需要发起很多的二次请求
+-- 要处理错综复杂的依赖关系
 
+**如何解决上述两个问题?**
+1 - 合并,压缩,精灵图,图片的Base64编码(小图片)
+2 - 可以使用requireJS, 也可以使用webpack可以解决各个包之间的复杂依赖关系
+
+**什么是webpack?**
+webpack是前端的一个项目构建工具, 它基于Node.js开发出来的一个前端工具
+
+**如何完美实现上述的2种解决方案?**
+1 - 使用Gulp, 是基于task任务的
+2 - 使用Webpack, 是基于整个项目进行构建的
+借助于Webpack这个前端自动化构建工具,可以完美实现资源的合并,打包,压缩,混淆,等诸多功能
+
+**Webpack的两种安装方式**:
+1 - 运行npm i webpack -g 全局安装webpack, 这样就能在全局使用webpack的命令
+2 - 在项目根目录中运行npm i webpack --save-dev安装到项目依赖中
+
+```
 
 
 

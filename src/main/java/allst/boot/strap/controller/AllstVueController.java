@@ -329,4 +329,13 @@ public class AllstVueController {
     public String allstVue43() {
         return "vue/Allst-Vue43";
     }
+
+    /**
+     * 案例
+     * @return
+     */
+    @GetMapping("/vue44")
+    public String allstVue44() {
+        return "vue/Allst-Vue44";
+    }
 }
