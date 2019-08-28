@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="max-age=6000"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Map</title>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zD7f9ccFvKGpGq2nN8ra0QUS5MGg6IMD"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
@@ -11,9 +13,9 @@
     <div id="allmap"></div>
 <script>
     // 创建地图实例
-    var map = new BMap.Map("allmap");
+    var map = new BMap.Map("allmap", {});
     // 初始化地图， 设置中心点坐标和地图级别
-    map.centerAndZoom(new BMap.Point(106.636580,26.653324), 16);
+    map.centerAndZoom(new BMap.Point(106.558437, 29.568996), 16);
     // 添加地图类型控件
     map.addControl(new BMap.MapTypeControl({
         mapTypes: [
