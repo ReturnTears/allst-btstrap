@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Map</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zD7f9ccFvKGpGq2nN8ra0QUS5MGg6IMD"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
 </head>
 <body>
     <h3>Map</h3>
+    <div id="allmap"></div>
+<script>
+    // 创建地图实例
+    var map = new BMap.Map("allmap");
+    // 初始化地图， 设置中心点坐标和地图级别
+    map.centerAndZoom(new BMap.Point(106.636580,26.653324), 16);
+    // 添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes: [
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]
+    }));
+    // 设置地图显示的城市
+    map.setCurrentCity("贵阳");
+    // 开启鼠标滚轮缩放
+    map.enableScrollWheelZoom(true);
+    // 开启键盘操作,键盘的上、下、左、右键可连续移动地图
+    map.enableKeyboard(true);
+    // 开启连续缩放效果
+    map.enableContinuousZoom(true);
+</script>
 </body>
 </html>

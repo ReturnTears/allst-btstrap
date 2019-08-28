@@ -15,4 +15,9 @@ public class MapController {
     public String mapInfo() {
         return "map/mapIndex";
     }
+
+    @GetMapping("amap")
+    public String amapInfo() {
+        return "map/mapBaidu";
+    }
 }
