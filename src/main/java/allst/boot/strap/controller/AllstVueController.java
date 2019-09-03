@@ -331,7 +331,7 @@ public class AllstVueController {
     }
 
     /**
-     * 案例
+     * Renders函数
      * @return
      */
     @GetMapping("/vue44")
