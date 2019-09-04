@@ -338,4 +338,13 @@ public class AllstVueController {
     public String allstVue44() {
         return "vue/Allst-Vue44";
     }
+
+    /**
+     * webpack引用Vue和script标签引用Vue的区别
+     * @return
+     */
+    @GetMapping("/vue45")
+    public String allstVue45() {
+        return "vue/Allst-Vue45";
+    }
 }
