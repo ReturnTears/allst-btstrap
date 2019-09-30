@@ -2,31 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>SuperMap-One-三维场景</title>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">-->
+    <title>GetStarted</title>
     <link rel="stylesheet" href="https://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js" data-main="./entry.js"></script>
+    <script src='http://www.supermapol.com/resources/api/libs/SuperMap.Include.js'></script>
     <style>
-        html, body, #cesiumContainer {
+        html, body {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+        }
+        .mapcontainer{
+            height: 600px;
         }
     </style>
 </head>
 <body>
-    <h3>三维场景<button onclick="onload()">onload</button></h3>
-    <div id="cesiumContainer"></div>
-<script>
-    function onload(Cesium) {
-        if (Cesium) {
-            let viewer = new Cesium.Viewer('cesiumContainer');
-            console.log(viewer)
-        }
-    }
-</script>
+    <div id = "map" class="mapcontainer"></div>
+    <script>
+        var url="http://www.supermapol.com";
+        var viewer=new SuperMap.Cloud.MapViewer(url,"map");
+        viewer.previewMapById(493);
+    </script>
 </body>
 </html>
