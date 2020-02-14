@@ -16,9 +16,11 @@
 <body>
 <script src="../../static/asserts/js/three.js"></script>
 <script>
+    // 创建场景
     var scene = new THREE.Scene();
+    // 创建相机(这里是透视摄像机: 视野角度FOV, 长宽比)
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
+    // 创建渲染器
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
