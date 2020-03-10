@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="170px" height="170px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter x="220px" y="300px" width="170px" height="170px" filterUnits="userSpaceOnUse" id="filter379">
+      <feOffset dx="5" dy="5" in="SourceAlpha" result="shadowOffsetInner" />
+      <feGaussianBlur stdDeviation="2.5" in="shadowOffsetInner" result="shadowGaussian" />
+      <feComposite in2="shadowGaussian" operator="atop" in="SourceAlpha" result="shadowComposite" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.666666666666667  0 0 0 0 0.666666666666667  0 0 0 0 0.666666666666667  0 0 0 0.349019607843137 0  " in="shadowComposite" />
+    </filter>
+    <g id="widget380">
+      <path d="M 221 307  A 6 6 0 0 1 227 301 L 373 301  A 6 6 0 0 1 379 307 L 379 453  A 6 6 0 0 1 373 459 L 227 459  A 6 6 0 0 1 221 453 L 221 307  Z " fill-rule="nonzero" fill="#d7d7d7" stroke="none" />
+      <path d="M 220.5 307  A 6.5 6.5 0 0 1 227 300.5 L 373 300.5  A 6.5 6.5 0 0 1 379.5 307 L 379.5 453  A 6.5 6.5 0 0 1 373 459.5 L 227 459.5  A 6.5 6.5 0 0 1 220.5 453 L 220.5 307  Z " stroke-width="1" stroke="#f2f2f2" fill="none" stroke-opacity="0.349019607843137" />
+    </g>
+  </defs>
+  <g transform="matrix(1 0 0 1 -220 -300 )">
+    <use xlink:href="#widget380" filter="url(#filter379)" />
+    <use xlink:href="#widget380" />
+  </g>
+</svg>

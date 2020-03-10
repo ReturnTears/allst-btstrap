@@ -1,5 +1,9 @@
 package allst.boot.strap.common;
 
+import com.sun.deploy.net.HttpResponse;
+import com.sun.deploy.net.HttpUtils;
+import org.apache.http.util.EntityUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
