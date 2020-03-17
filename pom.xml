@@ -20,13 +20,25 @@
 		<java.version>1.8</java.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
 		<thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
+        <fr.version>10.0</fr.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
 		<!-- 引入webjars下jQuery依赖 -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -176,6 +188,68 @@
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>2.1.6</version>
+        </dependency>
+
+        <!-- 导入帆软报表本地依赖 -->
+        <dependency>
+            <groupId>fine.accumulator</groupId>
+            <artifactId>fine-accumulator</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.activator</groupId>
+            <artifactId>fine-activator</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.core</groupId>
+            <artifactId>fine-core</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.datasource</groupId>
+            <artifactId>fine-datasource</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.decision</groupId>
+            <artifactId>fine-decision</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.decision-report</groupId>
+            <artifactId>fine-decision-report</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.report-engine</groupId>
+            <artifactId>fine-report-engine</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.schedule</groupId>
+            <artifactId>fine-schedule</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.schedule-report</groupId>
+            <artifactId>fine-schedule-report</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.swift-log-adaptor</groupId>
+            <artifactId>fine-swift-log-adaptor</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.third</groupId>
+            <artifactId>fine-third</artifactId>
+            <version>${fr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fine.webui</groupId>
+            <artifactId>fine-webui</artifactId>
+            <version>${fr.version}</version>
         </dependency>
 
 		<!-- test -->

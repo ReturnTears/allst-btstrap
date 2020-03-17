@@ -59,4 +59,9 @@ public class CssDemoController {
     public String cssBootstrapSelect2() {
         return "bootstrap/bootstrapSelect2";
     }
+
+    @GetMapping("/fr1")
+    public String cssFineReport1() {
+        return "fr/finereport1";
+    }
 }
