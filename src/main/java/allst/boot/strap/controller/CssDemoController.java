@@ -3,6 +3,8 @@ package allst.boot.strap.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author June 2019/03/05 下午 09:23
  * @version 1.0
@@ -61,7 +63,8 @@ public class CssDemoController {
     }
 
     @GetMapping("/fr1")
-    public String cssFineReport1() {
+    public String cssFineReport1(HttpServletResponse response) {
+        response.addHeader("x-frame-options", "SAMEORIGIN");
         return "fr/finereport1";
     }
 }

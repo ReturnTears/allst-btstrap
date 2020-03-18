@@ -1,10 +1,11 @@
 # mysql数据源连接配置spring:
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/comm?autoReconnect=true&useSSL=true  # (comm - company) | (mysql - house)
     username: root
-    password: 123456
+    password: hyj123456 # company
+    #password: 123456 #home
     type: com.alibaba.druid.pool.DruidDataSource
   # 数据源其他配置
     initialSize: 5
