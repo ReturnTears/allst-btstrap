@@ -2,6 +2,7 @@ package allst.boot.strap.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Vue 测试 Controller
@@ -346,5 +347,14 @@ public class AllstVueController {
     @GetMapping("/vue45")
     public String allstVue45() {
         return "vue/Allst-Vue45";
+    }
+
+    /**
+     * My Vue study 1
+     * @return vm对象
+     */
+    @GetMapping("/myVue1")
+    public ModelAndView myVue1() {
+        return  new ModelAndView("vue/my-vue1");
     }
 }

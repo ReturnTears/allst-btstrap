@@ -8,21 +8,26 @@
 <body>
     <!-- new的Vue实例，会控制这个元素的所有内容 -->
     <div id="app">
-        <!-- 使用v-clock可以解决插值表达式闪烁的问题 -->
-        <h2 th:v-cloak>{{msg}}</h2>
+        <!-- 使用v-cloak可以解决插值表达式闪烁的问题 -->
+        <h2 v-cloak>{{msg}}</h2>
         <!-- v-text没有闪烁的问题,会覆盖标签中原本的内容 -->
-        <h3 th:v-text="msg">被替换</h3>
+        <h3 v-text="msg">被替换</h3>
+
+        <span>{{msg}}</span>
 
         <h4>{{msg2}}</h4>
-        <h4 th:v-text="msg2"></h4>
-        <h4 th:v-html="msg2"></h4>
+        <h4 v-text="msg2"></h4>
+        <h4 v-html="msg2"></h4>
 
         <!-- v-bind是Vue中用于提供绑定属性的指令,可以缩写为: , v-bind可以写合法的js表达式 -->
-        <input type="button" value="按钮1" v-bind:title="mytitle + '名称'">
-        <input type="button" value="按钮2" :title="mytitle + '11'">
+        <input type="button" v-bind:value="myValue + '按钮1'" v-bind:title="mytitle + '名称'">
+        <input type="button" :value="myValue + '按钮2'" :title="mytitle + '11'">
         <!-- v-on绑定事件的指令 -->
         <input type="button" value="按钮3" v-on:click="show">
         <input type="button" value="按钮4" @click="show">
+        <!-- 按钮修改text的值 -->
+        <button @click="chgValue">点击修改值</button>
+        <input :type="inpType" :disabled="isDisabled" value="绑定type"/>
     </div>
 
     <script>
@@ -32,11 +37,18 @@
             data: { // data属性中，存放的是el中要用到的数据
                 msg: '开启Vue学习之旅',
                 msg2: '<h1>msg2内容</h1>',
-                mytitle: '自定义title'
+                mytitle: '自定义title',
+                myValue: '自定义Value',
+                i: 0,
+                inpType: 'text',
+                isDisabled: true
             },
             methods: { //methods属性中定义了当前Vue实例的所有可用方法
                 show: function () {
-                    alert('hi');
+                    console.log('hi');
+                },
+                chgValue: function () {
+                    this.msg = "开启Vue学习之旅~修改后的值~" + this.i++;
                 }
             }
         })

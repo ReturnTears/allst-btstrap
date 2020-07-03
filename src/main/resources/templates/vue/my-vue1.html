@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-model="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 方式1 -->
+        <p v-if="isMorning">早上好！</p>
+        <p v-if="isAfternonn">下午好！</p>
+        <p v-if="isEvening">晚上好！</p>
+
+        <!-- 方式2:Vue支持在v-if中进行简单的表达式运算 -->
+        <p v-if="myHours < 12">早上好~</p>
+        <p v-if="myHours >= 12">下午好~</p>
+        <p v-if="myHours >= 18">晚上好~</p>
+
+        <!-- 方式3： -->
+        <p v-if="path === '/'">你正处于首页/</p>
+        <p v-else>你正处于{{path}}</p>
+
+        <!-- v-for -->
+        <p>
+            <span v-for="dog in dogs">{{dog}}&nbsp;&nbsp;</span>
+        </p>
+        <!-- 请记住参数的顺序是：(value, key)。 -->
+        <ul>
+            <li v-for="(value, key) in argRent">
+                {{key}} ~ {{value}}
+            </li>
+            <!-- 不使用键值的情况 -->
+            <li v-for="value in argRent">
+                {{value}}
+            </li>
+            <li v-for="n in 5">
+                {{n}}
+            </li>
+        </ul>
+
+        <!-- 响应式 -->
+        <p>自从你打开这个页面已经过了{{seconds}}分</p>
+
+        <!-- 数据双向绑定 -->
+        <input type="text" v-bind:value="msg">
+        <input type="text" v-model:value="msg">
+        <span>msg : {{msg}}</span>
+    </div>
+<script>
+    var hours = new Date().getHours();
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            isMorning: hours < 12,
+            isAfternonn: hours >= 12 & hours < 18,
+            isEvening: hours >= 18,
+            myHours: hours,
+            path: location.pathname, //location.pathname是当前页面URL的路径值
+            dogs: ["Rex", "Rover", "Alan"],
+            argRent: {
+                london: 1650,
+                paris: 1100,
+                NYC: 2000
+            },
+            seconds: 0,
+            msg: 'Hello Vue'
+        },
+        methods: {
+
+        },
+        created() {
+            setInterval(() => {
+                this.seconds++;
+            }, 1000 * 60);
+        }
+    });
+    // vm.dogs.splice(2, 1, "Hello"); 效果同下
+    Vue.set(vm.dogs, 2, 'Bob');
+</script>
+</body>
+</html>
