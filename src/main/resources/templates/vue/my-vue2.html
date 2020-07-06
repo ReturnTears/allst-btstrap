@@ -21,12 +21,15 @@
     // 创建Vue实例，得到ViewModel
     let vm = new Vue({
         el: '#app',
+        // data对象
         data: {
             msg: 'Hello Vue',
             status: 2,
             numbers: [-5, 0, 2, -1, 1, 0.5],
-            numbers2: [5, 8, 3]
+            numbers2: [5, 8, 3],
+            count: 0
         },
+        // 方法
         methods: {
             statusMth(id) {
                 const status = ({
@@ -63,6 +66,12 @@
                     const diffVal = newValue - oldValue;
                     this.numbers2.push(diffVal);
                 }
+            }
+        },
+        // 侦听器
+        watchers: {
+            count() {
+
             }
         }
     });
