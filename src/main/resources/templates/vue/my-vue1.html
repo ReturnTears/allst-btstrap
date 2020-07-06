@@ -40,12 +40,26 @@
         </ul>
 
         <!-- 响应式 -->
-        <p>自从你打开这个页面已经过了{{seconds}}分</p>
+        <p>自从你打开这个页面已经过了{{seconds}}秒</p>
 
         <!-- 数据双向绑定 -->
-        <input type="text" v-bind:value="msg">
-        <input type="text" v-model:value="msg">
+        <span>双向数据绑定:</span>
+        <label>
+            <input type="text" v-bind:value="msg" />
+        </label>
+        <label>
+            <input type="text" v-model:value="msg" value="Hello"/>
+        </label>
         <span>msg : {{msg}}</span>
+        <div>
+            <label><input type="radio" v-model="value" value="1"/>No1.</label>
+            <label><input type="radio" v-model="value" value="2"/>No2.</label>
+            <label><input type="radio" v-model="value" value="3"/>No3.</label>
+            <p>选中的Value值为{{value}}</p>
+        </div>
+        <!-- 动态设置HTML -->
+        <div>{{myHtml}}</div>
+        <div v-html="myHtml"></div>
     </div>
 <script>
     var hours = new Date().getHours();
@@ -65,7 +79,8 @@
                 NYC: 2000
             },
             seconds: 0,
-            msg: 'Hello Vue'
+            msg: 'Hello Vue',
+            myHtml: '<strong>自定义HTML内容~</strong>'
         },
         methods: {
 
@@ -73,7 +88,7 @@
         created() {
             setInterval(() => {
                 this.seconds++;
-            }, 1000 * 60);
+            }, 1000);
         }
     });
     // vm.dogs.splice(2, 1, "Hello"); 效果同下
