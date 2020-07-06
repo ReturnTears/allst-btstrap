@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+    <p>当前状态: {{statusMth(status)}}</p>
+    <ul>
+        <li v-for="number in getFilterPositive(numbers)">{{number}}</li>
+    </ul>
+    <p>所有正数得和：{{getPositiveNumberSum()}}</p>
+    <p>数字总和：{{numberTotal}}</p>
+    <p>Sum of Numbers：{{num2Total}}</p>
+    <input type="button" value="计算属性" @click="calcVal"/>
+</div>
+<script>
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello Vue',
+            status: 2,
+            numbers: [-5, 0, 2, -1, 1, 0.5],
+            numbers2: [5, 8, 3]
+        },
+        methods: {
+            statusMth(id) {
+                const status = ({
+                    0: 'sleep',
+                    1: 'eat',
+                    2: 'Learn'
+                })[id];
+                return status || '未知状态：' + id;
+            },
+            getFilterPositive(numbers) {
+                return numbers.filter(number => number > 0)
+            },
+            filterPositive() { // this.numbers指向data对象中的numbers数组
+                return this.numbers.filter(number => number > 0)
+            },
+            getPositiveNumberSum() { // this.filterPositive()则指向methods对象中被命名为该名称的方法
+                return this.filterPositive().reduce((sum, val) => sum + val);
+            },
+            calcVal() {
+                console.log(this.num2Total += 5);
+            }
+        },
+        // 计算属性
+        computed: {
+            numberTotal() {
+                return this.numbers2.reduce((sum, val) => sum + val);
+            },
+            num2Total: {
+                get() {
+                    return this.numbers2.reduce((sum, val) => sum + val)
+                },
+                set(newValue) {
+                    const oldValue = this.num2Total;
+                    const diffVal = newValue - oldValue;
+                    this.numbers2.push(diffVal);
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
