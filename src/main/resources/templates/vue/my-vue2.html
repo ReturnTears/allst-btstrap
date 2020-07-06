@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Vue</title>
@@ -16,6 +16,14 @@
     <p>数字总和：{{numberTotal}}</p>
     <p>Sum of Numbers：{{num2Total}}</p>
     <input type="button" value="计算属性" @click="calcVal"/>
+    <!-- 侦听器 -->
+    <div>
+        <label>
+            <input type="text" v-model:value="inputValue"/>
+            <input type="text" v-bind:value="inputValue"/>
+        </label>
+        <p>2s后，显示输入的值为: {{oldInputValue}}</p>
+    </div>
 </div>
 <script>
     // 创建Vue实例，得到ViewModel
@@ -27,7 +35,9 @@
             status: 2,
             numbers: [-5, 0, 2, -1, 1, 0.5],
             numbers2: [5, 8, 3],
-            count: 0
+            count: 0,
+            inputValue: 'Hi',
+            oldInputValue: 'Hi~'
         },
         // 方法
         methods: {
@@ -69,9 +79,15 @@
             }
         },
         // 侦听器
-        watchers: {
-            count() {
-
+        watch: {
+            inputValue: {
+                handler(newValue, oldValue) {
+                    console.log(newValue, oldValue);
+                    setTimeout(function() {
+                        this.oldInputValue = newValue;
+                    }, 2000);
+                },
+                deep: true
             }
         }
     });

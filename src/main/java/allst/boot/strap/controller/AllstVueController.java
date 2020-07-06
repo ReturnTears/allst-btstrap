@@ -366,4 +366,13 @@ public class AllstVueController {
     public ModelAndView myVue2() {
         return  new ModelAndView("vue/my-vue2");
     }
+
+    /**
+     * My Vue study 3
+     * @return vm对象
+     */
+    @GetMapping("/myVue3")
+    public ModelAndView myVue3() {
+        return  new ModelAndView("vue/my-vue3");
+    }
 }

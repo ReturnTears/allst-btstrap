@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+    <p>No1.{{one | formatNum('$')}}</p>
+    <p>No1.{{two | formatNum('￥')}}</p>
+    <p>No1.{{three | formatNums('#')}}</p>
+    <label>
+        <input type="text" v-bind:value="4321 | formatNum('&')"/>
+    </label>
+</div>
+<script>
+    // 全局过滤器
+    Vue.filter('formatNums', function (value, symbol) {
+        return symbol + (value / 100).toFixed(2);
+    });
+    // 创建Vue实例，得到ViewModel
+    let vm = new Vue({
+        el: '#app',
+        // data对象
+        data: {
+            msg: 'Hello Vue',
+            one: 998,
+            two: 1200,
+            three: 2134,
+            four: 4321
+        },
+        filters: {
+            formatNum(value, symbol) {
+                return symbol + (value / 100).toFixed(2);
+            }
+        }
+    });
+</script>
+</body>
+</html>
