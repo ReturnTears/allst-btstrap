@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Allst-Vue3-案例</title>
-    <script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>
+    <!--<script src="" th:src="@{/webjars/vue/2.6.9/dist/vue.js}"></script>-->
     <style>
         * {
             padding: 0;
@@ -16,26 +16,32 @@
     </style>
 </head>
 <body>
-    <label>
-        <input type="checkbox" name="all" v-on:click="chooseAll" v-model="selectArr.length==goodsList.length"/>
-        <span>全选</span>
-    </label>
-    <div v-for="(index, item) in goodsList">
-        <a href="javascript:;" rel="external nofollow">
-            <input type="checkbox" :value="index" v-model="selectArr"/>
-            商品名称:<span v-html="item.name"></span>
-            价格:<span v-html="item.price"></span>
-        </a>
+    <div id="app">
+        <label>
+            <input type="checkbox" name="all" v-on:click="chooseAll" /> <!-- v-model="selectArr.length==goodsList.length" -->
+            <span>全选</span>
+        </label>
+        <div v-for="(item, index) in goodsList">
+            <a href="javascript:;" rel="external nofollow">
+                <label>
+                    <input type="checkbox" :value="index" v-model="selectArr"/>
+                </label>
+                商品名称:<span v-html="item.name"></span>
+                价格:<span v-html="item.price"></span>
+            </a>
+           <!-- 商品名称:<span v-text="item.name"></span>
+            价格:<span v-text="item.price"></span>-->
+        </div>
+        <label>
+            <input type="checkbox" name="all" @click="chooseAll" />  <!-- v-model="selectArr.length==goodsList.length" -->
+            <span>全选</span>
+        </label>
     </div>
-    <label>
-        <input type="checkbox" name="all" v-on:click="chooseAll" v-model="selectArr.length==goodsList.length" />
-        <span>全选</span>
-    </label>
     <script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}"/>
     <script>
         var vue = new Vue({
-          el: 'body',
+          el: '#app',
           data: {
               goodsList: [
                   {
@@ -61,22 +67,22 @@
               ],
               selectArr: []
           },
-            ready: function () {
+        ready: function () {
 
-            },
-            methods: {
-              chooseAll: function (event) {
-                  var oThis = this;
-                  oThis.selectArr = [];
-                  if (event.currentTarget.checked) {
-                      oThis.goodsList.forEach(function (item, index) {
-                          oThis.selectArr.push(index);
-                      });
-                  }
-                  console.log(oThis.selectArr)
+        },
+        methods: {
+          chooseAll: function (event) {
+              var oThis = this;
+              oThis.selectArr = [];
+              if (event.target.checked) {
+                  oThis.goodsList.forEach(function (item, index, arr) {
+                      oThis.selectArr.push(index);
+                  });
               }
-            }
-        })
+              // console.log(oThis.selectArr)
+          }
+        }
+    })
     </script>
 </body>
 </html>

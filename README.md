@@ -743,3 +743,5 @@ created函数方法会在应用初始化完成后执行。
 3. [String.prototype.padStart(maxLength, fillString)](http://www.css88.com/archives/7715)
 4. [js 里面的键盘事件对应的键码](http://www.cnblogs.com/wuhua1/p/6686237.html)
 5. [Vue.js双向绑定的实现原理](http://www.cnblogs.com/kidney/p/6052935.html)
+
+强制终止Windows下进程：taskkill -pid 8812 -f
