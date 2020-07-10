@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
-      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>vuejs-数量选择器(2层数据结构)</title>
@@ -95,74 +94,76 @@
     </style>
 </head>
 <body>
-<div class="store-item" v-for="(index1, item) in goodsObj">
-    <p>
-        <span v-html="item.name"></span>
-        <label class="choose-all">
-            <input type="checkbox" name="all" v-on:click="chooseShopGoods(index1)" v-model="item.checked" />
+<div id="app">
+    <div class="store-item" v-for="(item, index1) in goodsObj">
+        <p>
+            <span v-html="item.name"></span>
+            <label class="choose-all">
+                <input type="checkbox" name="all" @click="chooseShopGoods(index1)" v-model="item.checked" />
+                <span>全选</span>
+            </label>
+        </p>
+        <table class="store-item">
+            <col width="10%"></col>
+            <col width="15%"></col>
+            <col width="15%"></col>
+            <col width="10%"></col>
+            <col width="40%"></col>
+            <col width="10%"></col>
+            <thead class="thead">
+            <tr>
+                <th>选择</th>
+                <th>商品</th>
+                <th>单价</th>
+                <th>运费</th>
+                <th>数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(data, index) in item.list">
+                <td>
+                    <input type="checkbox" name="all" v-model="data.checked" @click="choose(index1, index)" />
+                </td>
+                <td>
+                    <p><span v-html="data.name"></span></p>
+                </td>
+                <td v-html="(data.price).toFixed(2)"></td>
+                <td v-html="(data.fare).toFixed(2)"></td>
+                <td>
+                    <div class="quantity-selector clearfix">
+                        <span class="reduce" @click="numChange(index1, index, -1)" :class="{ 'disable' : data.num==1 }">－</span>
+                        <input type="number" class="number" :data-realStock="data.realStock" @keyUp="numEntry(index1, index)" @keyDown="numEntry(index1, index)" v-model="data.num"/>
+                        <span class="add" @click="numChange(index1, index, 1)" :class="{ 'disable' : data.num==data.realStock }">＋</span>
+                    </div>
+                </td>
+                <td>
+                    <a href="javascript:;" rel="external nofollow" @click="delGoods(index1, index)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="cal-store-box">
+            <p>店铺总运费: <span v-html="calEveryFare(index1)"></span></p>
+            <p>店铺商品总金额: <span v-html="calEveryStore(index1)"></span></p>
+        </div>
+    </div>
+
+    <div class="store-footer">
+        <label>
+            <input type="checkbox" @click="chooseAllGoods($event)" v-model="allChecked" />
             <span>全选</span>
         </label>
-    </p>
-    <table class="store-item">
-        <col width="10%"></col>
-        <col width="15%"></col>
-        <col width="15%"></col>
-        <col width="10%"></col>
-        <col width="40%"></col>
-        <col width="10%"></col>
-        <thead class="thead">
-        <tr>
-            <th>选择</th>
-            <th>商品</th>
-            <th>单价</th>
-            <th>运费</th>
-            <th>数量</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(index, data) in item.list">
-            <td>
-                <input type="checkbox" name="all" v-model="data.checked" v-on:click="choose(index1, index)" />
-            </td>
-            <td>
-                <p><span v-html="data.name"></span></p>
-            </td>
-            <td v-html="(data.price).toFixed(2)"></td>
-            <td v-html="(data.fare).toFixed(2)"></td>
-            <td>
-                <div class="quantity-selector clearfix">
-                    <span class="reduce" v-on:click="numChange(index1, $index, -1)" v-bind:class="{ 'disable' : data.num==1 }">－</span>
-                    <input type="number" v-bind:value="data.num" class="number" v-bind:data-realStock="data.realStock" v-on:keyUp="numEntry(index1, $index)" v-on:keyDown="numEntry(index1, $index)" v-model="data.num"/>
-                    <span class="add" v-on:click="numChange(index1, $index, 1)" v-bind:class="{ 'disable' : data.num==data.realStock }">＋</span>
-                </div>
-            </td>
-            <td>
-                <a href="javascript:;" rel="external nofollow" v-on:click="delGoods(index1, index)">删除</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="cal-store-box">
-        <p>店铺总运费: <span v-html="calEveryFare(index1)"></span></p>
-        <p>店铺商品总金额: <span v-html="calEveryStore(index1)"></span></p>
-    </div>
-</div>
-
-<div class="store-footer">
-    <label>
-        <input type="checkbox" v-on:click="chooseAllGoods($event)" v-model="allChecked" />
-        <span>全选</span>
-    </label>
-    <div class="cal-box">
-        <p>商品总运费:<span v-html="totalFare.toFixed(2)"></span></p>
-        <p>商品总金额:<span v-html="totalMoney.toFixed(2)"></span></p>
+        <div class="cal-box">
+            <p>商品总运费:<span v-html="totalFare.toFixed(2)"></span></p>
+            <p>商品总金额:<span v-html="totalMoney.toFixed(2)"></span></p>
+        </div>
     </div>
 </div>
 
 <!--<script src="https://cdn.bootcss.com/vue/2.6.9/vue.js"></script>-->
 <script>
-    var goodsObj = [
+    const goodsObj = [
         {
             name : '大胖的店',
             checked : false,
@@ -262,8 +263,8 @@
             ]
         },
     ];
-    var vue = new Vue({
-        el : 'body',
+    let vue = new Vue({
+        el : '#app',
         data : {
             goodsObj : goodsObj,
             totalMoney : 0,
@@ -281,7 +282,7 @@
                 }
                 for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
                     this.goodsObj[i]['checked'] = flag;
-                    var list = this.goodsObj[i]['list'];
+                    let list = this.goodsObj[i]['list'];
                     for ( var k = 0, len1 = list.length; k < len1; k++ ) {
                         list[k]['checked'] = flag;
                     }
@@ -293,7 +294,7 @@
 
             // 每个店铺全选
             chooseShopGoods : function( index) {
-                var list = this.goodsObj[index]['list'],
+                let list = this.goodsObj[index]['list'],
                     len = list.length;
                 if ( this.goodsObj[index]['checked'] ) {
                     for (var i = 0; i < len; i++ ) {
@@ -314,7 +315,7 @@
 
             // 单个选择
             choose : function( index1, index) {
-                var list = this.goodsObj[index1]['list'],
+                let list = this.goodsObj[index1]['list'],
                     len = list.length;
                 if ( list[index]['checked'] ) {
                     this.goodsObj[index1]['checked'] = false;
@@ -342,7 +343,7 @@
 
             // 判断是否选择所有商品的全选
             isChooseAll : function() {
-                var flag1 = true;
+                let flag1 = true;
                 for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
                     if ( this.goodsObj[i]['checked'] == false ) {
                         flag1 = false;
@@ -354,7 +355,7 @@
 
             // 商品数量控制
             numChange : function(index1, index, numChange) {
-                var goods = this.goodsObj[index1]['list'][index],
+                let goods = this.goodsObj[index1]['list'][index],
                     oThis = this;
                 if ( numChange == 1 ) {
                     goods.num++;
@@ -375,7 +376,7 @@
 
             // 用户填写容错处理
             numEntry : function(index1, index) {
-                var goods = this.goodsObj[index1]['list'][index];
+                let goods = this.goodsObj[index1]['list'][index];
                 if ( goods.num <=1 ) {
                     goods.num = 1;
                 }
@@ -388,7 +389,7 @@
 
             // 计算每个店铺的商品总额
             calEveryStore : function(index) {
-                var everyStoreMoney = 0,
+                let everyStoreMoney = 0,
                     list = this.goodsObj[index]['list'];
                 list.forEach(function(item, index, arr) {
                     if ( list[index]['checked'] ) {
@@ -400,7 +401,7 @@
 
             // 计算每个店铺的运费总额
             calEveryFare : function(index) {
-                var everyStoreFare = 0,
+                let everyStoreFare = 0,
                     list = this.goodsObj[index]['list'];
                 list.forEach(function(item, index, arr) {
                     if ( list[index]['checked'] ) {
@@ -412,7 +413,7 @@
 
             // 计算商品总金额
             calTotalMoney : function () {
-                var oThis = this;
+                let oThis = this;
                 this.totalMoney = 0;
                 for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
                     var list = this.goodsObj[i]['list'];
@@ -426,7 +427,7 @@
 
             // 计算商品总运费
             calTotalFare : function () {
-                var oThis = this;
+                let oThis = this;
                 this.totalFare = 0;
                 for ( var i = 0, len = this.goodsObj.length; i < len; i++ ) {
                     var list = this.goodsObj[i]['list'];

@@ -3,6 +3,7 @@ package allst.boot.strap.mapper;
 import allst.boot.strap.bean.Brand;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -18,14 +19,14 @@ public interface BrandMapper {
      * @param id
      * @return
      */
-    @Select("select id,brandId, brandName, brandCTime from brand where Id = #{id}")
+    @Select("select id, brandID, brandName, brandCTime from brand where Id = #{id}")
     Brand getBrandById(Integer id);
 
     /**
      * 获取所有的Brand信息
      * @return
      */
-    @Select("select id, brandId, brandName, brandCTime from brand")
+    @Select("select id, brandID, brandName, brandCTime from brand")
     List<Brand> getBrands();
 
     /**
@@ -33,7 +34,8 @@ public interface BrandMapper {
      * @param brand
      * @return
      */
-    @Insert("insert into brand (brandID, brandName) values (#{brand.getBrandID}, #{brand.getBrandName})")
+    @Insert("insert into brand(brandID, brandName) values (#{brandID}, #{brandName})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     Integer insertBrand(Brand brand);
 
     /**

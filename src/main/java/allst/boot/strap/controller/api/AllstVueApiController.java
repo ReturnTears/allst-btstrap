@@ -36,9 +36,9 @@ public class AllstVueApiController {
     }
 
     /**
-     * 插入有问题，待处理        todo
-     * @param brandID
-     * @param brandName
+     * 插入有问题
+     * @param brandID   params1
+     * @param brandName params2
      * @return
      */
     @PostMapping("/addBrand")
