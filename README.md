@@ -1,10 +1,4 @@
-# Vue.js - Day1
-
-## 课程介绍
-前5天： 都在学习Vue基本的语法和概念；打包工具 Webpack , Gulp
-后5天： 以项目驱动教学；
-
-
+# Vue.js
 ### 什么是Vue.js
 
 + Vue.js 是目前最火的一个前端框架，React是最流行的一个前端框架（React除了开发网站，还可以开发手机App， Vue语法也是可以用于进行手机App开发的，需要借助于Weex）
@@ -19,28 +13,15 @@
 ## 为什么要学习流行框架
  + 企业为了提高开发效率：在企业中，时间就是效率，效率就是金钱；
   - 企业中，使用框架，能够提高开发的效率；
-
-
-
  + 提高开发效率的发展历程：原生JS -> Jquery之类的类库 -> 前端模板引擎 -> Angular.js / Vue.js（能够帮助我们减少不必要的DOM操作；提高渲染效率；双向数据绑定的概念【通过框架提供的指令，我们前端程序员只需要关心数据的业务逻辑，不再关心DOM是如何渲染的了】）
  + 在Vue中，一个核心的概念，就是让用户不再操作DOM元素，解放了用户的双手，让程序员可以更多的时间去关注业务逻辑；
-
-
-
  + 增强自己就业时候的竞争力
   - 人无我有，人有我优
   - 你平时不忙的时候，都在干嘛？
 
 ## 框架和库的区别
-
-
-
  + 框架：是一套完整的解决方案；对项目的侵入性较大，项目如果需要更换框架，则需要重新架构整个项目。
-
   - node 中的 express；
-
-
-
  + 库（插件）：提供某一个小功能，对项目的侵入性较小，如果某个库无法完成某些需求，可以很容易切换到其它库实现需求。
   - 1. 从Jquery 切换到 Zepto
   - 2. 从 EJS 切换到 art-template
@@ -51,8 +32,6 @@
  + MVVM是前端视图层的概念，主要关注于 视图层分离，也就是说：MVVM把前端的视图层，分为了 三部分 Model, View , VM ViewModel
 
  + 为什么有了MVC还要有MVVM
-
-
 
 ## Vue.js 基本代码 和 MVVM 之间的对应关系
 
@@ -82,8 +61,7 @@ v-on 可以跟任何事件绑定
 
 1. HTML结构：
 
-```
-
+```html
 <div id="app">
 
     <p>{{info}}</p>
@@ -98,7 +76,7 @@ v-on 可以跟任何事件绑定
 
 2. Vue实例：
 在方法中，this指向该方法所属的组件。可以使用this访问data对象的属性和其他方法
-```
+```javascript
 
 	// 创建 Vue 实例，得到 ViewModel
 
@@ -193,7 +171,7 @@ data对象最适合纯粹的数据：如果想将数据放在某处，然后在�
 
 1. HTML 代码结构
 
-```
+```html
 
   <div id="app">
 
@@ -223,7 +201,7 @@ data对象最适合纯粹的数据：如果想将数据放在某处，然后在�
 
 2. Vue实例代码：
 
-```
+```javascript
 
 	// 创建 Vue 实例，得到 ViewModel
 
@@ -442,7 +420,7 @@ data: {
 
 + 在使用 `v-for` 指令循环每一行数据的时候，不再直接 `item in list`，而是 `in` 一个 过滤的methods 方法，同时，把过滤条件`searchName`传递进去：
 
-```
+```html
 
 <tbody>
 
@@ -512,7 +490,7 @@ search(name) {
 
 2. 私有 `filters` 定义方式：
 
-```
+```javascript
 
 filters: { // 私有局部过滤器，只能在 当前 VM 对象所控制的 View 区域进行使用
 
@@ -560,18 +538,11 @@ filters: { // 私有局部过滤器，只能在 当前 VM 对象所控制的 Vie
 
 ```
 
-
-
 > 使用ES6中的字符串新方法 String.prototype.padStart(maxLength, fillString='') 或 String.prototype.padEnd(maxLength, fillString='')来填充字符串；
-
-
-
-
 
 ### 全局过滤器
 
-```
-
+```javascript
 // 定义一个全局过滤器
 
 Vue.filter('dataFormat', function (input, pattern = '') {
@@ -606,110 +577,68 @@ Vue.filter('dataFormat', function (input, pattern = '') {
 
     var ss = dt.getSeconds().toString().padStart(2, '0');
 
-
-
     return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
-
   }
-
 });
 
 ```
-
-
-
 > 注意：当有局部和全局两个名称相同的过滤器时候，会以就近原则进行调用，即：局部过滤器优先于全局过滤器被调用！
-
-
 
 ## 键盘修饰符以及自定义键盘修饰符
 
 ### 1.x中自定义键盘修饰符【了解即可】
 
-```
-
+```javascript
 Vue.directive('on').keyCodes.f2 = 113;
-
 ```
 
 ### [2.x中自定义键盘修饰符](https://cn.vuejs.org/v2/guide/events.html#键值修饰符)
 
 1. 通过`Vue.config.keyCodes.名称 = 按键值`来自定义案件修饰符的别名：
 
-```
-
+```javascript
 Vue.config.keyCodes.f2 = 113;
-
 ```
 
 2. 使用自定义的按键修饰符：
 
-```
-
+```html
 <input type="text" v-model="name" @keyup.f2="add">
-
 ```
-
-
-
-
 
 ## [自定义指令](https://cn.vuejs.org/v2/guide/custom-directive.html)
 
 1. 自定义全局和局部的 自定义指令：
 
-```
-
+```javascript
     // 自定义全局指令 v-focus，为绑定的元素自动获取焦点：
-
     Vue.directive('focus', {
-
       inserted: function (el) { // inserted 表示被绑定元素插入父节点时调用
-
         el.focus();
-
       }
-
     });
 
-
-
     // 自定义局部指令 v-color 和 v-font-weight，为绑定的元素设置指定的字体颜色 和 字体粗细：
-
-      directives: {
-
+    directives: {
         color: { // 为元素设置指定的字体颜色
-
-          bind(el, binding) {
-
+            bind(el, binding) {
             el.style.color = binding.value;
-
-          }
-
+            }
         },
-
         'font-weight': function (el, binding2) { // 自定义指令的简写形式，等同于定义了 bind 和 update 两个钩子函数
-
-          el.style.fontWeight = binding2.value;
-
+            el.style.fontWeight = binding2.value;
         }
-
-      }
-
+    }
 ```
 
 2. 自定义指令的使用方式：
 
-```
-
+```html
 <input type="text" v-model="searchName" v-focus v-color="'red'" v-font-weight="900">
-
 ```
-
-
 
 ## Vue 1.x 中 自定义元素指令【已废弃,了解即可】
-```
+```javascript
 Vue.elementDirective('red-color', {
   bind: function () {
     this.el.style.color = 'red';
@@ -728,7 +657,7 @@ Vue.elementDirective('red-color', {
     前端路由: 对于单页面应用程序来说，主要通过URL的hash(#)来实现不同页面之间的切换，同时，hash有一个特点;HTTP请求不会包含hash相关的内容
             所以，单页面程序中页面跳转主要用hash实现
 在单页面应用程序中，这种通过hash改变切换页面的方式，称作前端路由(区别于后端路由)
-    
+
 
 ```
 
